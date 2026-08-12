@@ -1,0 +1,1 @@
+const { Detalle_Pedido } = require('../models/index.js');

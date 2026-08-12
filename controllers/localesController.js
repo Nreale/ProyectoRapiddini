@@ -1,0 +1,1 @@
+const { Locales } = require('../models/index.js');

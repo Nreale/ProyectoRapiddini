@@ -1,0 +1,1 @@
+const { Repartidores } = require('../models/index.js');

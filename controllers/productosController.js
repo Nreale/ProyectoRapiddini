@@ -1,0 +1,1 @@
+const { Productos } = require('../models/index.js');

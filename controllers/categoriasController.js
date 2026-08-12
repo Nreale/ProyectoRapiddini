@@ -1,0 +1,1 @@
+const { Categorias } = require('../models/index.js');
