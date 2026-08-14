@@ -13,7 +13,15 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "mysql2": "^3.22.5",
+    "mysql2": "^3.23.3",
     "sequelize": "^6.37.8"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nreale/ProyectoRapiddini.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nreale/ProyectoRapiddini/issues"
+  },
+  "homepage": "https://github.com/Nreale/ProyectoRapiddini#readme"
 }
