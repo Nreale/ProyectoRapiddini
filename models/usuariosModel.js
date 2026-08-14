@@ -31,6 +31,18 @@ const Usuarios = sequelize.define('Usuarios', {
         allowNull: false,
         
     },
+    fecha_nacimiento: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    genero: {
+        type: DataTypes.ENUM('Masculino', 'Femenino', 'Otro'),
+        allowNull: false
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     fecha_registro: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -38,7 +50,7 @@ const Usuarios = sequelize.define('Usuarios', {
     
 }, {
     tableName: 'usuarios',
-    timestamps: false
+    timestamps: true
 });
 
 module.exports = {

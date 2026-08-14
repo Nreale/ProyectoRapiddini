@@ -11,7 +11,7 @@ const getBuscarProducto = async (req, res) => {
         }
         })
         //Agregar incluide para mostrar tambien la marca del producto, que muestre por marcas o por nombre del producto
-        if (producto == []) {
+        if (producto.length === 0) {
             return res.status(404).json("Producto no encontrado")
         }
 
@@ -29,7 +29,7 @@ const postAgregarProducto = async (req, res) => {
         if (!nombre || !descripcion || !precio || !id_categoria || !id_local) {
             return res.status(400).json("Faltan parametros")
         }
-        const producto = await Productos.findAll({
+        const producto = await Productos.findOne({
             where: {
                 nombre: nombre,
                 id_local: id_local
@@ -84,19 +84,25 @@ const deletedBorrarProducto = async (req, res) => {
     
 }
 
-const putchModificarProducto = async (req, res) => {
+const patchModificarProducto = async (req, res) => {
     try {
-        const {nombre, descripcion, precio, id_categoria} = req.body
+        const { nombre, descripcion, precio, id_categoria } = req.body;
 
-        const producto = await Productos.findByPk(Number(req.params.id))
+        const producto = await Productos.findByPk(Number(req.params.id));
         if (!producto) {
-            return res.status(404).json({mensaje: "No encontrado"})
+            return res.status(404).json({ mensaje: "Producto no encontrado", estado: false });
         }
-        
-        await producto.update({ nombre, descripcion, precio})
 
-        res.status(200).json({mensaje: "Modificado Correctamente", producto: producto})
+        //FALTA HACER EL INCLUIDE
+        await producto.update({
+            nombre,
+            descripcion,
+            precio,
+        });
+
+        return res.status(200).json({mensaje: "Modificado correctamente", estado: true});
+
     } catch (error) {
-        return res.status(500).json({error: error.message})
+        return res.status(500).json({ error: error.message, estado: false });
     }
-}
+};
