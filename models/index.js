@@ -25,16 +25,23 @@ Direcciones.hasMany(Pedidos, {foreignKey: 'Id_Direccion'})
 Pedidos.belongsTo(Repartidores, {foreignKey: 'Id_Repartidor'})
 Repartidores.hasMany(Pedidos, {foreignKey: 'Id_Repartidor'})
 
-DetallePedido.belongsTo(Pedido, { foreignKey: 'Id_Pedido' })
-Pedido.hasMany(DetallePedido, { foreignKey: 'Id_Pedido' })
 
-DetallePedido.belongsTo(Producto, { foreignKey: 'Id_Producto' })
-Producto.hasMany(DetallePedido, { foreignKey: 'Id_Producto' })
+Detalle_Pedido.belongsTo(Pedidos, { foreignKey: 'Id_Pedido' })
+Pedidos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Pedido' })
 
 
+Detalle_Pedido.belongsTo(Productos, { foreignKey: 'Id_Producto' })
+Productos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Producto' })
+
+Categorias.belongsTo(Productos, {foreignKey: 'Id_Categoria'})
+Productos.hasMany(Categorias, {foreignKey: 'Id_Categoria'})
 
 
+Productos.belongsTo(Locales, {foreignKey: 'Id_Local'})
+Locales.hasMany(Productos, {foreignKey: 'Id_Local'})
 
+Sucursales.belongsTo(Locales, {foreignKey: 'Id_local'})
+Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'})
 
 
 module.exports = {
