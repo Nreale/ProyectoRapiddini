@@ -1,4 +1,4 @@
-const { Productos } = require('../models/index.js');
+const { Productos, Locales, Categorias } = require('../models/index.js');
 
 const getBuscarProducto = async (req, res) => {
     try {
@@ -8,9 +8,13 @@ const getBuscarProducto = async (req, res) => {
         const producto = await Productos.findAll({
         where: {
             nombre: req.params.producto
+        },
+        include: {
+            model: Locales,
+            attributes: ['nombre']
         }
         })
-        //Agregar incluide para mostrar tambien la marca del producto, que muestre por marcas o por nombre del producto
+        
         if (producto.length === 0) {
             return res.status(404).json("Producto no encontrado")
         }
@@ -43,9 +47,11 @@ const postAgregarProducto = async (req, res) => {
         const producto_nuevo = await Productos.create({
             nombre,
             descripcion,
-            precio
+            precio,
+            Id_Categoria: id_categoria,
+            Id_Local: id_local
         })
-        //AGREGAR INCLUIDE PARA LA CATEGORIA Y PARA EL LOCAL
+        
         return res.status(201).json({mensaje: "Agregado al catalogo", producto: producto_nuevo})
         
     } catch (error) {
@@ -68,7 +74,7 @@ const deletedBorrarProducto = async (req, res) => {
         const producto = await Productos.destroy({
             where: {
                 nombre: req.params.nombre,
-                id_Local: id_Local //ARREGLAR CON INCLUIDE, hacer validacion de permisos
+                id_Local: Number(req.params.id_local) //ARREGLAR CON INCLUIDE, hacer validacion de permisos
             }
         })
 
@@ -98,6 +104,7 @@ const patchModificarProducto = async (req, res) => {
             nombre,
             descripcion,
             precio,
+            Id_Categoria: id_categoria
         });
 
         return res.status(200).json({mensaje: "Modificado correctamente", estado: true});
@@ -105,4 +112,11 @@ const patchModificarProducto = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: error.message, estado: false });
     }
+};
+
+module.exports = { 
+    patchModificarProducto,
+    deletedBorrarProducto,
+    postAgregarProducto,
+    getBuscarProducto
 };

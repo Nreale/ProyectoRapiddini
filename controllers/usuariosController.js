@@ -145,3 +145,10 @@ const patchModificarUsuario = async (req, res) => {
         return res.status(500).json({ error: error.message, estado: false });
     }
 };
+
+module.exports = { 
+    patchModificarUsuario,
+    deletedBorrarUsuario,
+    postRegistrarUsuario,
+    getBuscarUsuario
+};
