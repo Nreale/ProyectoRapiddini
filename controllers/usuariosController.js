@@ -1,4 +1,6 @@
 const { Usuarios } = require('../models/index.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const getBuscarUsuario = async (req, res) => {
     try {
@@ -146,9 +148,32 @@ const patchModificarUsuario = async (req, res) => {
     }
 };
 
+const getIniciarSesion = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await Usuarios.findOne({where: {email: email}})
+        if (!user) {
+            return res.status(400).json({ message: 'Credenciales incorrectas' });
+        }
+        
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Credenciales incorrectas' });
+        }
+
+        const payload = { username: user.username, isActive: true };
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).json({ message: 'Login correcto', token });
+    } catch (error) {
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
 module.exports = { 
     patchModificarUsuario,
     deletedBorrarUsuario,
     postRegistrarUsuario,
-    getBuscarUsuario
+    getBuscarUsuario,
+    getIniciarSesion
 };
