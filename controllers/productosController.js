@@ -1,4 +1,4 @@
-const { Productos, Locales, Categorias } = require('../models/index.js');
+const { Productos, Locales} = require('../models/index.js');
 
 const getBuscarProducto = async (req, res) => {
     try {
