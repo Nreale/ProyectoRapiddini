@@ -1,6 +1,19 @@
-const { Usuarios } = require('../models/index.js');
+const { Usuarios, Roles } = require('../models/index.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+const getMostrarUsuarios = async (req, res) =>{
+    try {
+        const usuarios = await Usuarios.findAll()
+        if (!usuarios) {
+            return res.status(404).json({message: "No hay usuarios"})
+        }
+
+        res.status(200).json({message: "Usuarios: ", usuarios})
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+}
 
 const getBuscarUsuario = async (req, res) => {
     try {
@@ -39,7 +52,7 @@ const postRegistrarUsuario = async (req, res) => {
         }
         const tieneDominioValido = dominiosValidos.some(dominio => email.endsWith(dominio));
         if (!tieneDominioValido){
-            return res.status(400).json({mensaje: "Formato incorrecto, debe ir algo antes del dominio", estado: false})
+            return res.status(400).json({mensaje: "Formato incorrecto", estado: false})
         }
         
         const usuario = await Usuarios.findOne({
@@ -166,14 +179,61 @@ const getIniciarSesion = async (req, res) => {
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {
-        res.status(500).json({ message: 'Error en el servidor' });
+        return res.status(500).json({ error: error.message, estado: false });
     }
 };
 
-module.exports = { 
+const postAsignarRol = async (req, res) => {
+    try {
+        const id_rol = Number(req.params.id_rol)
+        const id_usuario = Number(req.params.id_usuario)
+
+        const usuario = await Usuarios.findByPk(id_usuario)
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        const rol = await Roles.findByPk(id_rol)
+        if (!rol) {
+            return res.status(404).json({message: "Rol no encontrado"})
+        }
+
+        await usuario.addRoles(id_rol)
+        res.status(201).json({message: "Rol asignado", usuario})
+    } catch (error) {
+        return res.status(500).json({ error: error.message, estado: false });
+    }
+};
+
+const deletedBorrarRol = async (req, res) => {
+    try {
+        const id_rol = Number(req.params.id_rol)
+        const id_usuario = Number(req.params.id_usuario)
+
+        const usuario = await Usuarios.findByPk(id_usuario)
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+        const estado = await usuario.hasRol(id_rol)
+        if (!estado) {
+            return res.status(404).json({message: "Ese usuario no tiene ese rol"})
+        }
+
+        await usuario.removeRol(id_rol)
+
+        res.status(200).json({message: "Borrado correcto"})
+    } catch (error) {
+        return res.status(500).json({ error: error.message, estado: false });
+    }
+}
+
+module.exports = {
+    getMostrarUsuarios,
     patchModificarUsuario,
     deletedBorrarUsuario,
     postRegistrarUsuario,
     getBuscarUsuario,
-    getIniciarSesion
+    getIniciarSesion,
+    postAsignarRol,
+    deletedBorrarRol
 };
