@@ -16,6 +16,10 @@ const Locales = sequelize.define('Locales', {
         allowNull: false,
         
     },
+    estado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    }
     
 }, {
     tableName: 'locales',
