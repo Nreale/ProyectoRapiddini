@@ -3,6 +3,7 @@ const { sequelize } = require('./config/db.js');
 const ProductoRoutes = require('./routers/ProductosRoutes.js');
 const UsuarioRoutes = require('./routers/UsuarioRoutes.js');
 const DireccionRoutes = require('./routers/DireccionRoutes.js')
+const SucursalRoutes =require('./routers/SucursalesRoutes.js')
 
 const server = express();
 server.use(express.json());
@@ -10,6 +11,7 @@ server.use(express.json());
 server.use('/Producto', ProductoRoutes);
 server.use('/Usuario', ProductoRoutes);
 server.use('/Direccion', DireccionRoutes);
+server.use('Sucursal', SucursalRoutes)
 
 server.listen(3000, async () => {
         try {
