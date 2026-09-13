@@ -2,12 +2,14 @@ const express = require("express");
 const { sequelize } = require('./config/db.js');
 const ProductoRoutes = require('./routers/ProductosRoutes.js');
 const UsuarioRoutes = require('./routers/UsuarioRoutes.js');
+const DireccionRoutes = require('./routers/DireccionRoutes.js')
 
 const server = express();
 server.use(express.json());
 
 server.use('/Producto', ProductoRoutes);
 server.use('/Usuario', ProductoRoutes);
+server.use('/Direccion', DireccionRoutes);
 
 server.listen(3000, async () => {
         try {

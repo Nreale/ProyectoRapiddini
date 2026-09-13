@@ -13,13 +13,23 @@ const Direcciones = sequelize.define('Direcciones', {
     },
     numero: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        
+        allowNull: false,  
     },
-    
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    edificio: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    timbre: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+  }
 }, {
-    tableName: 'direcciones',
-    timestamps: false
+  tableName: 'DIRECCION',
+  timestamps: false
 });
 
 module.exports = {
