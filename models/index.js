@@ -7,11 +7,13 @@ const {Locales} = require('./localesModel');
 const {Direcciones} = require('./direccionesModel');
 const {Detalle_Pedido} = require('./detalles_pedidosModel');
 const {Categorias} = require('./categoriasModel');
-
+const {Vendedores} = require('./vendedoresModel')
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
 Direcciones.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
 
+Usuarios.hasMany(Vendedores, { foreignKey: 'Id_Usuario' });
+Vendedores.belongsTo(Usuarios, { foreignKey: 'Id_Usuario' });
 
 Usuarios.hasMany(Pedidos, {foreignKey: 'Id_Usuario'});
 Pedidos.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
