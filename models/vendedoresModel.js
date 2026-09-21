@@ -7,30 +7,6 @@ const Vendedores = sequelize.define('Vendedores', {
         autoIncrement: true,
         primaryKey: true
     },
-    /*nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },
-    apellido: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },*/
-    email: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },
-    telefono: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    contraseña: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },
     CUIT: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -40,14 +16,13 @@ const Vendedores = sequelize.define('Vendedores', {
         allowNull: false
     },
     fecha_registro_comercial: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATETIME,
         allowNull: false
     },
     isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false
-    },
-    
+    }
 }, {
     tableName: 'vendedores',
     timestamps: true
