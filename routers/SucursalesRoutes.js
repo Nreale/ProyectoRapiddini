@@ -1,11 +1,19 @@
 const { Router } = require('express');
-const { getSucursales, getSucursal, crearSucursal, actualizarSucursal, eliminarSucursal } = require('../controllers/sucursalController');
+const {
+    getSucursales,
+    getSucursalById,
+    crearSucursal,
+    actualizarSucursal,
+    eliminarSucursal
+} = require('../controllers/sucursalesController.js');
+
 const router = Router();
 
-router.get('/VerSucursales', getSucursales);
-router.get('/VerSucursal/:id_sucursal', getSucursal);
-router.post('/CrearSucursal', crearSucursal);
-router.put('/ActualizarSucursal/:id_sucursal', actualizarSucursal);
-router.delete('/BorrarSucursal/:id_sucursal', eliminarSucursal);
+// Rutas base para /api/sucursales
+router.get('/', getSucursales);
+router.get('/:id', getSucursalById);
+router.post('/', crearSucursal);
+router.put('/:id', actualizarSucursal);
+router.delete('/:id', eliminarSucursal);
 
 module.exports = router;
