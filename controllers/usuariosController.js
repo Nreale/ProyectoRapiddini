@@ -89,6 +89,18 @@ const postRegistrarUsuario = async (req, res) => {
             genero,
             isActive: true          
         })
+
+        const rol = await Roles.findOne({
+            where: {
+                nombre: 'USUARIO'
+            }
+        })
+
+        if (!rol) {
+            return res.status(404).json({mensaje: "Hubo un problema", estado: true})
+        }
+
+        await usuario.addRol(rol)
         
         return res.status(201).json({mensaje: "Usuario Creado Correctamente", estado: true})
         
@@ -170,13 +182,18 @@ const getIniciarSesion = async (req, res) => {
         }
         
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.contraseña);
         if (!isMatch) {
             return res.status(400).json({ message: 'Credenciales incorrectas' });
         }
 
+<<<<<<< Updated upstream:controllers/usuariosController.js
         const payload = { username: user.username, isActive: true };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+=======
+        const payload = { email: user.email, id: user.id  };
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
+>>>>>>> Stashed changes:API/controllers/usuariosController.js
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {
         return res.status(500).json({ error: error.message, estado: false });
