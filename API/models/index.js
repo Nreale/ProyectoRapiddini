@@ -27,13 +27,11 @@ Direcciones.hasMany(Pedidos, {foreignKey: 'Id_Direccion'});
 Pedidos.belongsTo(Repartidores, {foreignKey: 'Id_Repartidor'});
 Repartidores.hasMany(Pedidos, {foreignKey: 'Id_Repartidor'});
 
-
 Detalle_Pedido.belongsTo(Pedidos, { foreignKey: 'Id_Pedido' });
 Pedidos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Pedido' });
 
 Detalle_Pedido.belongsTo(Productos, { foreignKey: 'Id_Producto' });
 Productos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Producto' });
-
 
 Productos.belongsTo(Categorias, {foreignKey: 'Id_Categoria'});
 Categorias.hasMany(Productos, {foreignKey: 'Id_Categoria'});
@@ -44,14 +42,14 @@ Locales.hasMany(Productos, {foreignKey: 'Id_Local'});
 Sucursales.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'});
 
-Permisos.belongsToMany(Roles, { through: Permisos_Roles, foreignKey: 'ID_Permisos_FK' });
-Roles.belongsToMany(Permisos, { through: Permisos_Roles, foreignKey: 'ID_Rol_FK' });
+Permisos.belongsToMany(Roles, { through: 'Permisos_Roles', foreignKey: 'Id_Permisos', otherKey: 'Id_Rol' });
+Roles.belongsToMany(Permisos, { through: 'Permisos_Roles', foreignKey: 'Id_Rol', otherKey: 'Id_Permisos' });
 
-Roles.belongsToMany(Usuarios, { through: Roles_Usuario, foreignKey: 'ID_Rol_FK' });
-Usuarios.belongsToMany(Roles, { through: Roles_Usuario, foreignKey: 'ID_Usuario_FK' });
+Roles.belongsToMany(Usuarios, { through: 'Roles_Usuario', foreignKey: 'Id_Rol', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Roles, { through: 'Roles_Usuario', foreignKey: 'Id_Usuario', otherKey: 'Id_Rol' });
 
-Permisos.belongsToMany(Usuarios, { through: Permisos_Usuarios, foreignKey: 'ID_Permisos_FK' });
-Usuarios.belongsToMany(Permisos, { through: Permisos_Usuarios, foreignKey: 'ID_Usuario_FK' });
+Permisos.belongsToMany(Usuarios, { through: 'Permisos_Usuarios', foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Permisos, { through: 'Permisos_Usuarios', foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
 
 module.exports = {
     Usuarios,
@@ -63,6 +61,7 @@ module.exports = {
     Direcciones,
     Detalle_Pedido,
     Categorias,
+    Vendedores,
     Roles,
     Permisos
 };

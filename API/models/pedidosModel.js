@@ -26,6 +26,18 @@ const Pedidos = sequelize.define('Pedidos', {
     metado_pago: {
         type: DataTypes.ENUM('Efectivo', 'Tarjeta Credito', 'Tarjeta Debito', 'Billetera Virutal'),
         allowNull: false,
+    },
+    Id_Usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Id_Direccion: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Id_Repartidor: {
+        type: DataTypes.INTEGER,
+        allowNull: true // Puede ser nulo mientras se asigna repartidor
     }
     
     

@@ -16,6 +16,10 @@ const Sucursales = sequelize.define('Sucursales', {
         type: DataTypes.STRING(100),
         allowNull: false,
         
+    },
+    Id_Local: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
     
 }, {

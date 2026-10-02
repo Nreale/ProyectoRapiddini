@@ -36,7 +36,7 @@ const Usuarios = sequelize.define('Usuarios', {
         
     },
     fecha_nacimiento: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     genero: {

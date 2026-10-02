@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/MostrarUsuarios', getMostrarUsuarios);
 router.get('/BuscarUsuario/:id', getBuscarUsuario);
-router.get('/IniciarSesion', getIniciarSesion);
+router.post('/IniciarSesion', getIniciarSesion);
 router.post('/Registrarte', postRegistrarUsuario);
 router.delete('/EliminarCuenta/:id', deletedBorrarUsuario);
 router.patch('/ModificarCuenta/:id', patchModificarUsuario);

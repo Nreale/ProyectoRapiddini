@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const getMostrarUsuarios = async (req, res) =>{
     try {
         const usuarios = await Usuarios.findAll()
-        if (!usuarios) {
+        if (usuarios.length === 0) {
             return res.status(404).json({message: "No hay usuarios"})
         }
 
@@ -90,7 +90,7 @@ const postRegistrarUsuario = async (req, res) => {
             return res.status(404).json({mensaje: "Hubo un problema", estado: true})
         }
 
-        await usuario.addRol(rol)
+        await nuevo_usuario.addRoles(rol)
         
         return res.status(201).json({mensaje: "Usuario Creado Correctamente", estado: true})
         
@@ -127,9 +127,14 @@ const deletedBorrarUsuario = async (req, res) => {
 const patchModificarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero } = req.body;
+        const {nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero } = req.body;
 
-        const usuario = await Usuarios.findByPk(Number(id));
+        const usuario = await Usuarios.findOne({
+            where: {
+                isActive: true,
+                id
+            }
+        });
         if (!usuario) {
             return res.status(404).json({ mensaje: "Usuario no encontrado", estado: false });
         }
@@ -154,7 +159,7 @@ const patchModificarUsuario = async (req, res) => {
             datosActualizar.contraseña = await bcrypt.hash(contraseña, 12);
         }
 
-        await usuario.update(datosAActualizar);
+        await usuario.update(datosActualizar);
 
         return res.status(200).json({mensaje: "Modificado correctamente",estado: true});
 
@@ -165,6 +170,8 @@ const patchModificarUsuario = async (req, res) => {
 
 const getIniciarSesion = async (req, res) => {
     try {
+        const JWT_SECRET = "gbyawdywiadbwa1"
+        
         const { email, password } = req.body;
         const user = await Usuarios.findOne({where: {email: email}})
         if (!user) {
@@ -177,8 +184,8 @@ const getIniciarSesion = async (req, res) => {
             return res.status(400).json({ message: 'Credenciales incorrectas' });
         }
 
-        const roles = await user.getRoles()
-        const payload = { email: user.email, id: user.id, rol: roles};
+        //const roles = await user.getRoles()
+        const payload = { email: user.email, id: user.id};
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {

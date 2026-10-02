@@ -15,7 +15,7 @@ const Direcciones = sequelize.define('Direcciones', {
         type: DataTypes.INTEGER,
         allowNull: false,  
     },
-    id_usuario: {
+    Id_Usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
