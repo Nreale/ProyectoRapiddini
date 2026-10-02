@@ -40,19 +40,9 @@ const getBuscarUsuario = async (req, res) => {
 const postRegistrarUsuario = async (req, res) => {
     try {
         const {nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero} = req.body
-        const dominiosValidos = ["@gmail.com", "@bue.edu.ar", "@hotmail.com"];
 
         if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero) {
             return res.status(400).json("Faltan parametros")
-        }
-
-        const cant = email.split("@").length -1;
-        if (cant !== 1) {
-            return res.status(400).json({mensaje: "Formato invalido", estado: false})
-        }
-        const tieneDominioValido = dominiosValidos.some(dominio => email.endsWith(dominio));
-        if (!tieneDominioValido){
-            return res.status(400).json({mensaje: "Formato incorrecto", estado: false})
         }
         
         const usuario = await Usuarios.findOne({
@@ -187,7 +177,8 @@ const getIniciarSesion = async (req, res) => {
             return res.status(400).json({ message: 'Credenciales incorrectas' });
         }
 
-        const payload = { email: user.email, id: user.id  };
+        const roles = await user.getRoles()
+        const payload = { email: user.email, id: user.id, rol: roles};
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {
@@ -195,49 +186,7 @@ const getIniciarSesion = async (req, res) => {
     }
 };
 
-const postAsignarRol = async (req, res) => {
-    try {
-        const id_rol = Number(req.params.id_rol)
-        const id_usuario = Number(req.params.id_usuario)
 
-        const usuario = await Usuarios.findByPk(id_usuario)
-        if (!usuario) {
-            return res.status(404).json({message: "Usuario no encontrado"})
-        }
-
-        const rol = await Roles.findByPk(id_rol)
-        if (!rol) {
-            return res.status(404).json({message: "Rol no encontrado"})
-        }
-
-        await usuario.addRoles(id_rol)
-        res.status(201).json({message: "Rol asignado", usuario})
-    } catch (error) {
-        return res.status(500).json({ error: error.message, estado: false });
-    }
-};
-
-const deletedBorrarRol = async (req, res) => {
-    try {
-        const id_rol = Number(req.params.id_rol)
-        const id_usuario = Number(req.params.id_usuario)
-
-        const usuario = await Usuarios.findByPk(id_usuario)
-        if (!usuario) {
-            return res.status(404).json({message: "Usuario no encontrado"})
-        }
-        const estado = await usuario.hasRol(id_rol)
-        if (!estado) {
-            return res.status(404).json({message: "Ese usuario no tiene ese rol"})
-        }
-
-        await usuario.removeRol(id_rol)
-
-        res.status(200).json({message: "Borrado correcto"})
-    } catch (error) {
-        return res.status(500).json({ error: error.message, estado: false });
-    }
-}
 
 module.exports = {
     getMostrarUsuarios,
@@ -246,6 +195,4 @@ module.exports = {
     postRegistrarUsuario,
     getBuscarUsuario,
     getIniciarSesion,
-    postAsignarRol,
-    deletedBorrarRol
 };

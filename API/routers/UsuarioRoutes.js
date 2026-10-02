@@ -6,9 +6,7 @@ router.get('/MostrarUsuarios', getMostrarUsuarios);
 router.get('/BuscarUsuario/:id', getBuscarUsuario);
 router.get('/IniciarSesion', getIniciarSesion);
 router.post('/Registrarte', postRegistrarUsuario);
-router.post('/AsignarRol/:id_usuario/:id_rol', postAsignarRol);
 router.delete('/EliminarCuenta/:id', deletedBorrarUsuario);
-router.delete('/EliminarRol/:id_usuario/:id_rol', deletedBorrarRol);
 router.patch('/ModificarCuenta/:id', patchModificarUsuario);
 
 module.exports = router;

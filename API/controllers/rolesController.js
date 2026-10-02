@@ -96,6 +96,11 @@ const AsignarRol = async (req, res) => {
             return res.status(404).json({message: "Rol no encontrado"})
         }
 
+        const estado = await usuario.hasRol(rol)
+        if (estado) {
+            return res.status(401).json({message: "Ya tiene ese Rol"})
+        }
+
         await usuario.addRol(rol)
 
         res.status(200).json({message: "Rol asignado correctamente"})
@@ -104,9 +109,50 @@ const AsignarRol = async (req, res) => {
     }
 }
 
+const SacarRol = async (req, res) => {
+    try {
+        const {email, nombre_rol} = req.body
+
+        if (!email && !nombre_rol) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+        const usuario = await Usuarios.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        const rol = await Roles.findOne({
+            where: {
+                nombre: nombre_rol
+            }
+        })
+
+        if (!rol) {
+            return res.status(404).json({message: "Rol no encontrado"})
+        }
+
+        const estado = await usuario.hasRol(rol)
+        if (!estado) {
+            return res.status(401).json({message: "No tiene ese Rol"})
+        }
+
+        await usuario.removeRol(rol)
+
+        res.status(200).json({message: "Rol desasignar correctamente"})
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+}
 module.exports = {
     CrearRol,
     BorrarRol,
     AsignarRol,
-    getMostrarRoles
+    getMostrarRoles,
+    SacarRol,
+    
 }
