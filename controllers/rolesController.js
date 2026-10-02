@@ -17,59 +17,78 @@ const getMostrarRoles = async (req, res) => {
     
 }
 
-const postAgregarRol = async (req, res) => {
+const CrearRol = async (req, res) => {
     try {
-        const nombre = req.params.nombre
+        const {nombre} = req.body
+
         if (!nombre) {
-            return res.status(400).json("Parametros incompletos")
+            return res.status(400).json({message: "Parametros incompletos"})
         }
-        
-        const rol = await Roles.create({
-            nombre
-        })
-
-        res.status(201).json({message: "Rol creado", rol})
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-    
-}
-
-const deletedBorrarRol = async (req, res) => {
-    try {
-        const nombre = req.params.nombre
-        if (!nombre) {
-            return res.status(400).json("Parametros incompletos")
-        }
-
-        const filas_borradas = await Roles.destroy({
+        const rol = await Roles.findOne({
             where: {
                 nombre
             }
         })
 
-        if (filas_borradas === 0) {
-            return res.status(404).json({ message: "Rol no encontrado" });
+        if (rol) {
+            res.status(401).json({message: "Ese rol ya existe"})
         }
 
-        res.status(200).json({message: "Borrado completo"})
+        const nuevorol = await Roles.create({
+            nombre
+        })
+
+        res.status(201).json({message: "Rol creado"})
     } catch (error) {
         return res.status(500).json({error: error.message})
     }
-    
 }
 
-const patchModificarRol = async (req, res) => {
+const BorrarRol = async (req, res) => {
     try {
-        const nombre = req.params.nombre
-        const nuevo_nombre = req.params.nuevo_nombre
-        if (!nombre || !nuevo_nombre) {
-            return res.status(400).json("Parametros incompletos")
-        }
+        const {nombre} = req.body
 
-        const rol = await Roles.findAll({
+        if (!nombre) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+        const rol = await Roles.findOne({
             where: {
                 nombre
+            }
+        })
+
+        if (!rol) {
+            res.status(401).json({message: "Ese rol no existe"})
+        }
+
+        await rol.destroy();
+
+        res.status(201).json({message: "Rol Borrado"})
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+}
+
+const AsignarRol = async (req, res) => {
+    try {
+        const {email, nombre_rol} = req.body
+
+        if (!email && !nombre_rol) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+        const usuario = await Usuarios.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        const rol = await Roles.findOne({
+            where: {
+                nombre: nombre_rol
             }
         })
 
@@ -77,83 +96,17 @@ const patchModificarRol = async (req, res) => {
             return res.status(404).json({message: "Rol no encontrado"})
         }
 
-        await rol.update({
-            nombre: nuevo_nombre
-        });
+        await usuario.addRol(rol)
 
-        res.status(200).json({message: "Modificacion hecha", rol})
+        res.status(200).json({message: "Rol asignado correctamente"})
     } catch (error) {
-        return res.status(500).json({ error: error.message, estado: false });
+        return res.status(500).json({error: error.message})
     }
-};
-
-const postAsignarPermiso = async (req, res) => {
-    try {
-        const id_rol = Number(req.params.id_rol)
-        const id_permiso = Number(req.params.id_permiso)
-    
-        if (!id_rol || !id_permiso) {
-            return res.status(400).json({message:"Parametros incompletos"})
-        }
-
-        const rol = await Roles.findByPk(id_rol)
-        if (!rol) {
-            return res.status(400).json({message:"No existe ese rol"})
-        }
-
-        const permiso = await Permisos.findByPk(id_permiso);
-        if (!permiso) {
-            return res.status(404).json({ message: "No existe ese permiso" });
-        }
-        
-        await rol.addPermisos(permiso)
-        res.status(201).json({message: "Asignado correctamente"})
-
-    } catch (error) {
-        return res.status(500).json({ error: error.message, estado: false });
-    }
-    
-}
-
-const deleteBorrarPermiso = async (req, res) => {
-    try {
-        const id_rol = Number(req.params.id_rol)
-        const id_permiso = Number(req.params.id_permiso)
-
-        if (!id_rol || !id_permiso) {
-                return res.status(400).json({message:"Parametros incompletos"})
-        }
-
-        const rol = await Roles.findByPk(id_rol)
-        if (!rol) {
-            return res.status(400).json({message:"No existe ese rol"})
-        }
-
-        const permiso = await Permisos.findByPk(id_permiso);
-        if (!permiso) {
-            return res.status(404).json({ message: "No existe ese permiso" });
-        }
-
-        const estado = await rol.hasPermiso(id_permiso)
-        if (!estado) {
-            return res.status(404).json({message: "Ese Rol no tiene ese permiso"})
-        }
-
-        await rol.removePermiso(permiso)
-
-        res.status(200).json({message: "Borrado correcto"})
-    } catch (error) {
-        return res.status(500).json({ error: error.message, estado: false });
-    }
-    
-
 }
 
 module.exports = {
-    getMostrarRoles,
-    postAgregarRol,
-    deletedBorrarRol,
-    patchModificarRol,
-    postAsignarPermiso,
-    deleteBorrarPermiso
-};
+    CrearRol,
+    BorrarRol,
+    AsignarRol,
+    getMostrarRoles
+}

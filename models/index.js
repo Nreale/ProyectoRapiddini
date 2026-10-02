@@ -8,12 +8,8 @@ const {Direcciones} = require('./direccionesModel');
 const {Detalle_Pedido} = require('./detalles_pedidosModel');
 const {Categorias} = require('./categoriasModel');
 const {Permisos} = require('./permisosModel');
-<<<<<<< Updated upstream:models/index.js
-const {Roles} = require('./rolesModel');
-=======
 const {Roles} = require('./rolesModel')
 
->>>>>>> Stashed changes:API/models/index.js
 
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
@@ -46,16 +42,6 @@ Locales.hasMany(Productos, {foreignKey: 'Id_Local'});
 Sucursales.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'});
 
-<<<<<<< Updated upstream:models/index.js
-Usuarios.belongsToMany(Roles, {through: 'Usuario_Roles', foreignKey: 'Id_Usuario', otherKey: 'Id_Rol'});
-Roles.belongsToMany(Usuarios, {through: 'Usuario_Roles', foreignKey: 'Id_Rol', otherKey: 'Id_Usuario'});
-
-Roles.belongsToMany(Permisos, {through: 'Roles_Permisos', foreignKey: 'Id_Rol', otherKey: 'Id_Permiso'});
-Permisos.belongsToMany(Roles, {through: 'Roles_Permisos', foreignKey: 'Id_Permiso', otherKey: 'Id_Rol'});
-
-Usuarios.belongsToMany(Permisos, {through: 'Usuarios_Permisos', foreignKey: 'Id_Usuario', otherKey: 'Id_Permiso'});
-Permisos.belongsToMany(Usuarios, {through: 'Usuarios_Permisos', foreignKey: 'Id_Permiso', otherKey: 'Id_Usuario'});
-=======
 Permisos.belongsToMany(Roles, { through: Permisos_Roles, foreignKey: 'ID_Permisos_FK' });
 Roles.belongsToMany(Permisos, { through: Permisos_Roles, foreignKey: 'ID_Rol_FK' });
 
@@ -64,7 +50,6 @@ Usuarios.belongsToMany(Roles, { through: Roles_Usuario, foreignKey: 'ID_Usuario_
 
 Permisos.belongsToMany(Usuarios, { through: Permisos_Usuarios, foreignKey: 'ID_Permisos_FK' });
 Usuarios.belongsToMany(Permisos, { through: Permisos_Usuarios, foreignKey: 'ID_Usuario_FK' });
->>>>>>> Stashed changes:API/models/index.js
 
 module.exports = {
     Usuarios,
