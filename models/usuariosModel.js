@@ -23,7 +23,7 @@ const Usuarios = sequelize.define('Usuarios', {
         
     },
     telefono: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     contraseña: {
@@ -46,6 +46,7 @@ const Usuarios = sequelize.define('Usuarios', {
     fecha_registro: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW
     }
     
 }, {
