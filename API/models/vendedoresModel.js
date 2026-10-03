@@ -16,11 +16,15 @@ const Vendedores = sequelize.define('Vendedores', {
         allowNull: false
     },
     fecha_registro_comercial: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false
     },
     isActive: {
         type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    Id_Usuario: {
+        type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {

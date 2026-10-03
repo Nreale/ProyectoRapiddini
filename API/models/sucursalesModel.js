@@ -1,26 +1,32 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const Permisos = sequelize.define('Roles', {
+const Sucursales = sequelize.define('Sucursales', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    Entidad: {
+    nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        
     },
-    Action: {
-        type: DataTypes.ENUM('Create', 'Read', 'Update', 'Deleted'),
+    direccion: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        
+    },
+    Id_Local: {
+        type: DataTypes.INTEGER,
         allowNull: false
     }
     
 }, {
-    tableName: 'roles',
+    tableName: 'sucursales',
     timestamps: false
 });
 
 module.exports = {
-    Permisos
+    Sucursales
 };

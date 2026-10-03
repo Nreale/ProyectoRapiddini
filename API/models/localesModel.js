@@ -1,37 +1,31 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const Direcciones = sequelize.define('Direcciones', {
+const Locales = sequelize.define('Locales', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    calle: {
+    nombre: {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    numero: {
+    telefono: {
         type: DataTypes.INTEGER,
-        allowNull: false,  
+        allowNull: false,
+        
     },
-    id_usuario: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    edificio: {
+    estado: {
         type: DataTypes.BOOLEAN,
         allowNull: false
-    },
-    timbre: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-  }
+    }
+    
 }, {
-  tableName: 'DIRECCION',
-  timestamps: false
+    tableName: 'locales',
+    timestamps: false
 });
 
 module.exports = {
-    Direcciones
+    Locales
 };

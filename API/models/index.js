@@ -7,7 +7,10 @@ const {Locales} = require('./localesModel');
 const {Direcciones} = require('./direccionesModel');
 const {Detalle_Pedido} = require('./detalles_pedidosModel');
 const {Categorias} = require('./categoriasModel');
+const {Permisos} = require('./permisosModel');
+const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
+
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
 Direcciones.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
@@ -18,33 +21,35 @@ Vendedores.belongsTo(Usuarios, { foreignKey: 'Id_Usuario' });
 Usuarios.hasMany(Pedidos, {foreignKey: 'Id_Usuario'});
 Pedidos.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
 
-/* Se cambia la relacion a 1 direccion muchos pedidos */
 Pedidos.belongsTo(Direcciones, {foreignKey: 'Id_Direccion'});
 Direcciones.hasMany(Pedidos, {foreignKey: 'Id_Direccion'});
 
 Pedidos.belongsTo(Repartidores, {foreignKey: 'Id_Repartidor'});
 Repartidores.hasMany(Pedidos, {foreignKey: 'Id_Repartidor'});
 
-
 Detalle_Pedido.belongsTo(Pedidos, { foreignKey: 'Id_Pedido' });
 Pedidos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Pedido' });
-
 
 Detalle_Pedido.belongsTo(Productos, { foreignKey: 'Id_Producto' });
 Productos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Producto' });
 
-// 🛠️ CORREGIDO: Un producto pertenece a una categoría, una categoría tiene muchos productos
 Productos.belongsTo(Categorias, {foreignKey: 'Id_Categoria'});
 Categorias.hasMany(Productos, {foreignKey: 'Id_Categoria'});
-
 
 Productos.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Productos, {foreignKey: 'Id_Local'});
 
-// 🛠️ CORREGIDO: Se unificó 'Id_Local' con 'L' mayúscula en ambos lados
 Sucursales.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'});
 
+Permisos.belongsToMany(Roles, { through: 'Permisos_Roles', foreignKey: 'Id_Permisos', otherKey: 'Id_Rol' });
+Roles.belongsToMany(Permisos, { through: 'Permisos_Roles', foreignKey: 'Id_Rol', otherKey: 'Id_Permisos' });
+
+Roles.belongsToMany(Usuarios, { through: 'Roles_Usuario', foreignKey: 'Id_Rol', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Roles, { through: 'Roles_Usuario', foreignKey: 'Id_Usuario', otherKey: 'Id_Rol' });
+
+Permisos.belongsToMany(Usuarios, { through: 'Permisos_Usuarios', foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Permisos, { through: 'Permisos_Usuarios', foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
 
 module.exports = {
     Usuarios,
@@ -55,5 +60,8 @@ module.exports = {
     Locales,
     Direcciones,
     Detalle_Pedido,
-    Categorias
+    Categorias,
+    Vendedores,
+    Roles,
+    Permisos
 };

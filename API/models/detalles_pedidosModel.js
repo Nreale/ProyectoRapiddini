@@ -10,6 +10,14 @@ const Detalle_Pedido = sequelize.define('Detalle_Pedido', {
     cantidad: {
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    Id_Pedido: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Id_Producto: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
     
 }, {
