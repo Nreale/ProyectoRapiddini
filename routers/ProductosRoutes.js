@@ -6,8 +6,6 @@ router.get('/BuscarProducto/:producto', getBuscarProducto);
 router.post('/AgregarProducto', postAgregarProducto);
 router.delete('/BorrarProducto/:nombre/:id_local', deletedBorrarProducto);
 router.patch('/ModificarProducto/:id', patchModificarProducto);
-
+"8===∍▄█▀█●"
 module.exports = router;
 
-
-"8===∍▄█▀█●"
