@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './Login.css'
 import axios from "axios"
+import {Link} from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [enviar, setEnviar] = useState(true)
+  const HabilitedLogin = email.trim() !== '' && password.trim() !== ''
 
   const [Token, setToken] = useState('')
 
@@ -21,8 +22,8 @@ function Login() {
   const CallLogin = async () => {
     try {
       const response = await axios.post('http://localhost:3000/users/login', {
-        email,
-        password
+        email: email.trim(),
+        password: password.trim()
       })
       setToken(response.data.token)
       alert('Login realizado con exito')
@@ -46,17 +47,24 @@ function Login() {
             </div>
           
             <div className='login__button--proceed'>
-              <button type='submit'>Iniciar Sesion</button>
+              <button type='submit' disabled={!HabilitedLogin}>Iniciar Sesion</button>
             </div>
           </div>
 
           <div className='login__buttons'>
-            <div className='login__buttons--register'>
-
+            <div className='login__buttons--text'>
+              <p>¿Nuevo por acá? Registrate para hacer tus pedidos o volvé al inicio.</p>
             </div>
-            <div className='login__buttons--back'>
             
-            </div>
+            <Link className='login__buttons--decoration' to='/Register'>
+              <button>Registrarse</button>
+            </Link>
+            
+            
+            <Link className='login__buttons--decoration' to='/Home'>
+              <button>Volver</button>
+            </Link>
+            
           </div>
         </form>
       </div>
