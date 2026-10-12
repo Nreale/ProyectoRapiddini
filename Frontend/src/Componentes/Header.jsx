@@ -8,7 +8,7 @@ function Cabecera() {
     const location = useLocation();
 
   
-    if (location.pathname === '/Login' || location.pathname === '/Register') {
+    if (location.pathname === '/Login' || location.pathname === '/Register' || location.pathname === '/RegisterType' || location.pathname === '/RegisterUser' || location.pathname === '/RegisterVendedor' || location.pathname === '/RegisterRepartidor') {
         return null;
     }
   return (
@@ -44,7 +44,7 @@ function Cabecera() {
                     </Link>
                 </div>
                 <div className='menu__icons'>
-                    <Link id='decoration--none' to='/Register'>
+                    <Link id='decoration--none' to='/RegisterType'>
                     <button>Register</button>
                     </Link>
                 </div>

@@ -14,42 +14,31 @@ function RegisterVendedor() {
   const [fecha_nacimiento, setFecha] = useState("")
   const [genero, setGenero] = useState("")
   const [CUIT, setCuit] = useState("")
-  const [razon_social, setRazon_social] = useState("")
-  const [Id_Usuario, setId_Usuario] = useState("")
+  const [Razon_Social, setRazon_social] = useState("")
   const [error, setError] = useState()
 
-  const RegistrarUsuario = async (nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero) =>{
-        
-        try {
-            const response = await axios.post("http://localhost:3000/Usuario/Registrarte", {
-                nombre,
-                apellido,
-                email,
-                telefono,
-                contraseña,
-                fecha_nacimiento,
-                genero,
 
-            })
-
-            console.log(response.data)
-        } catch (error) {
-            console.error("Error en la petición:", error)
-            if (error.response) {
-                console.log("entro")
-                setError(error.response.data)
-                console.log(setError)
-            }
-        }
-  }
-
-  const RegistrarVendedor = async (nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, razon_social) => {
+  const RegistrarVendedor = async (nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social) => {
     try {
-      RegistrarUsuario(nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero)
+        setError("")
+        const response = await axios.post("http://localhost:3000/Vendedor/Registrarte", {
+            CUIT,
+            Razon_Social,
+            nombre,
+            apellido,
+            email,
+            telefono,
+            contraseña,
+            fecha_nacimiento,
+            genero
+        })
 
-      const response = await axios.post("http://localhost:3000/Usuario/Registrarte")
+
     } catch (error) {
-      
+        console.error("Error en la petición:", error)
+        if (error.response) {
+            setError(error.response.data)
+        }
     }
   }
 
@@ -75,13 +64,13 @@ function RegisterVendedor() {
                 <input type="password" value={contraseña} placeholder='Contraseña' onChange={(e)=> {setContraseña(e.target.value)}}/>
                 <input type="date" value={fecha_nacimiento} placeholder='Fecha Nacimiento' onChange={(e)=> {setFecha(e.target.value)}}/>
                 <input type="text" value={CUIT} placeholder='CUIT' onChange={(e)=> {setCuit(e.target.value)}}/>
-                <input type="text" value={razon_social} placeholder='Razon Social' onChange={(e)=> {setRazon_social(e.target.value)}}/>
+                <input type="text" value={Razon_Social} placeholder='Razon Social' onChange={(e)=> {setRazon_social(e.target.value)}}/>
             </div>
             <br />
             <Link to='/RegisterType'>Volver para atras</Link>
             {error? (<p>Mensaje: {error.message}</p>):(<></>)}
             <div className='register__from--button'>
-                <button onClick={(e)=>{RegistrarVendedor(nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero)}}>ENVIAR</button>
+                <button onClick={(e)=>{RegistrarVendedor(nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social)}}>ENVIAR</button>
             </div>
             
 

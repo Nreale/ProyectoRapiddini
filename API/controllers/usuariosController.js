@@ -42,7 +42,7 @@ const postRegistrarUsuario = async (req, res) => {
         const {nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero} = req.body
 
         if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero) {
-            return res.status(400).json("Faltan parametros")
+            return res.status(400).json({message: "Faltan parametros"})
         }
         
         const usuario = await Usuarios.findOne({
@@ -66,7 +66,17 @@ const postRegistrarUsuario = async (req, res) => {
             usuario.genero = genero;
             usuario.isActive = true
             await usuario.save();
-            return res.status(201).json({message: "Usuario creado correctamente", estado: true})
+            return res.status(201).json({message: "Usuario creado correctamente", estado: true, id: usuario.id})
+        }
+
+        const rol = await Roles.findOne({
+            where: {
+                nombre: 'USUARIO'
+            }
+        })
+
+        if (!rol) {
+            return res.status(404).json({message: "Hubo un problema", estado: true})
         }
 
         const nuevo_usuario = await Usuarios.create({
@@ -80,19 +90,9 @@ const postRegistrarUsuario = async (req, res) => {
             isActive: true          
         })
 
-        const rol = await Roles.findOne({
-            where: {
-                nombre: 'USUARIO'
-            }
-        })
-
-        if (!rol) {
-            return res.status(404).json({message: "Hubo un problema", estado: true})
-        }
-
         await nuevo_usuario.addRoles(rol)
         
-        return res.status(201).json({message: "Usuario Creado Correctamente", estado: true})
+        return res.status(201).json({message: "Usuario Creado Correctamente", estado: true, id: nuevo_usuario.id})
         
     } catch (error) {
         return res.status(500).json({ error: error.message });
