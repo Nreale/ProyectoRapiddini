@@ -18,7 +18,7 @@ const getMostrarUsuarios = async (req, res) =>{
 const getBuscarUsuario = async (req, res) => {
     try {
         if (req.params.id === undefined) {
-            return res.status(400).json({mensaje: "Falta el id"})
+            return res.status(400).json({message: "Falta el id"})
         }
         const usuario = await Usuarios.findOne({
             where: {
@@ -30,7 +30,7 @@ const getBuscarUsuario = async (req, res) => {
             return res.status(404).json("Usuario no encontrado")
         }
 
-        res.status(200).json({mensaje: "Usuario encontrado", usuario: usuario})
+        res.status(200).json({message: "Usuario encontrado", usuario: usuario})
     } catch (error) {
         return res.status(500).json({error: error.message})
     }
@@ -52,7 +52,7 @@ const postRegistrarUsuario = async (req, res) => {
         })
         
         if (usuario && usuario.isActive === true) {
-            return res.status(409).json({mensaje: "Este email ya esta usado", email: email})
+            return res.status(409).json({message: "Este email ya esta usado", email: email})
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 12);
@@ -66,7 +66,7 @@ const postRegistrarUsuario = async (req, res) => {
             usuario.genero = genero;
             usuario.isActive = true
             await usuario.save();
-            return res.status(201).json({mensaje: "Usuario creado correctamente", estado: true})
+            return res.status(201).json({message: "Usuario creado correctamente", estado: true})
         }
 
         const nuevo_usuario = await Usuarios.create({
@@ -87,12 +87,12 @@ const postRegistrarUsuario = async (req, res) => {
         })
 
         if (!rol) {
-            return res.status(404).json({mensaje: "Hubo un problema", estado: true})
+            return res.status(404).json({message: "Hubo un problema", estado: true})
         }
 
         await nuevo_usuario.addRoles(rol)
         
-        return res.status(201).json({mensaje: "Usuario Creado Correctamente", estado: true})
+        return res.status(201).json({message: "Usuario Creado Correctamente", estado: true})
         
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -104,19 +104,19 @@ const deletedBorrarUsuario = async (req, res) => {
     try {
 
         if (req.params.id === undefined) {
-            return res.status(400).json({mensaje: "Parametros incompletos"})
+            return res.status(400).json({message: "Parametros incompletos"})
         }
         
         const usuario = await Usuarios.findByPk(Number(req.params.id))
 
         if (!usuario) {
-            return res.status(404).json({mensaje: "Usuario no encontrado", estado: false})
+            return res.status(404).json({message: "Usuario no encontrado", estado: false})
         }
 
         usuario.isActive = false
         await usuario.save()
 
-        res.status(200).json({mensaje: "Usuario borrado correctamente", estado: true})
+        res.status(200).json({message: "Usuario borrado correctamente", estado: true})
         
     } catch (error) {
         return res.status(500).json({error: error.message})
@@ -137,7 +137,7 @@ const patchModificarUsuario = async (req, res) => {
         });
 
         if (!usuario) {
-            return res.status(404).json({ mensaje: "Usuario no encontrado", estado: false });
+            return res.status(404).json({ message: "Usuario no encontrado", estado: false });
         }
 
         const datosActualizar = {};
@@ -151,7 +151,7 @@ const patchModificarUsuario = async (req, res) => {
         if (email && email !== usuario.email) {
             const emailExiste = await Usuarios.findOne({ where: { email } });
             if (emailExiste) {
-                return res.status(409).json({ mensaje: "El nuevo email ya está en uso", estado: false });
+                return res.status(409).json({ message: "El nuevo email ya está en uso", estado: false });
             }
             datosActualizar.email = email;
         }
@@ -162,7 +162,7 @@ const patchModificarUsuario = async (req, res) => {
 
         await usuario.update(datosActualizar);
 
-        return res.status(200).json({mensaje: "Modificado correctamente",estado: true});
+        return res.status(200).json({message: "Modificado correctamente",estado: true});
 
     } catch (error) {
         return res.status(500).json({ error: error.message, estado: false });
