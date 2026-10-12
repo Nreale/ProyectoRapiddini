@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getLocales, getLocal, postAgregarLocal, patchModificarLocal, deleteBorrarLocal } = require('../controllers/localController');
+const { getLocales, getLocal, postAgregarLocal, patchModificarLocal, deleteBorrarLocal } = require('../controllers/localesController');
 const router = Router();
 
 router.get('/ObtenerLocales', getLocales);

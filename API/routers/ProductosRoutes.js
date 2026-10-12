@@ -7,4 +7,6 @@ router.post('/AgregarProducto', postAgregarProducto);
 router.delete('/BorrarProducto/:nombre/:id_local', deletedBorrarProducto);
 router.patch('/ModificarProducto/:id', patchModificarProducto);
 
+
 module.exports = router;
+

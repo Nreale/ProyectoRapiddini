@@ -46,6 +46,8 @@ function RegisterVendedor() {
   const RegistrarVendedor = async (nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, razon_social) => {
     try {
       RegistrarUsuario(nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero)
+
+      const response = await axios.post("http://localhost:3000/Usuario/Registrarte")
     } catch (error) {
       
     }

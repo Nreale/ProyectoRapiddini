@@ -1,6 +1,19 @@
-const { Usuarios } = require('../models/index.js');
+const { Usuarios, Roles } = require('../models/index.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+const getMostrarUsuarios = async (req, res) =>{
+    try {
+        const usuarios = await Usuarios.findAll()
+        if (usuarios.length === 0) {
+            return res.status(404).json({message: "No hay usuarios"})
+        }
+
+        res.status(200).json({message: "Usuarios: ", usuarios})
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+}
 
 const getBuscarUsuario = async (req, res) => {
     try {
@@ -31,7 +44,7 @@ const postRegistrarUsuario = async (req, res) => {
         if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero) {
             return res.status(400).json("Faltan parametros")
         }
-
+        
         const usuario = await Usuarios.findOne({
             where: {
                 email
@@ -66,6 +79,18 @@ const postRegistrarUsuario = async (req, res) => {
             genero,
             isActive: true          
         })
+
+        const rol = await Roles.findOne({
+            where: {
+                nombre: 'USUARIO'
+            }
+        })
+
+        if (!rol) {
+            return res.status(404).json({mensaje: "Hubo un problema", estado: true})
+        }
+
+        await nuevo_usuario.addRoles(rol)
         
         return res.status(201).json({mensaje: "Usuario Creado Correctamente", estado: true})
         
@@ -146,6 +171,8 @@ const patchModificarUsuario = async (req, res) => {
 
 const getIniciarSesion = async (req, res) => {
     try {
+        const JWT_SECRET = "gbyawdywiadbwa1"
+        
         const { email, password } = req.body;
         const user = await Usuarios.findOne({where: {email: email}})
         if (!user) {
@@ -153,23 +180,27 @@ const getIniciarSesion = async (req, res) => {
         }
         
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.contraseña);
         if (!isMatch) {
             return res.status(400).json({ message: 'Credenciales incorrectas' });
         }
 
-        const payload = { username: user.username, isActive: true };
+        //const roles = await user.getRoles()
+        const payload = { email: user.email, id: user.id};
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {
-        res.status(500).json({ message: 'Error en el servidor' });
+        return res.status(500).json({ error: error.message, estado: false });
     }
 };
 
-module.exports = { 
+
+
+module.exports = {
+    getMostrarUsuarios,
     patchModificarUsuario,
     deletedBorrarUsuario,
     postRegistrarUsuario,
     getBuscarUsuario,
-    getIniciarSesion
+    getIniciarSesion,
 };

@@ -20,6 +20,14 @@ const Productos = sequelize.define('Productos', {
     precio: {
         type: DataTypes.FLOAT,
         allowNull: false,
+    },
+    Id_Categoria: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Id_Local: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
     
     
