@@ -111,5 +111,5 @@
 .menu__logo-img {
   max-width: 85%;
   max-height: 85%;
-  object-fit: contain; /* Mantiene la proporción original de la imagen */
+  object-fit: contain; /*Esto es para que el logo quede bien*/
 }
