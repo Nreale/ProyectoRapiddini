@@ -30,7 +30,7 @@ function Cabecera() {
       <div className='menu'>
 
         <div className='menu__logo'>
-            <Link to="../assets/logo_placeholder.jpg">
+            <Link to="/">
                 <img src={logo} alt="Logo de la app" className="menu__logo-img" />
             </Link>
         </div>
