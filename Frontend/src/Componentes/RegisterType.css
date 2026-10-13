@@ -1,93 +1,87 @@
-.registertype{
+.registertype {
     width: 100vw;   
-    height: 100vh;
+    height: 100vh; /* Forzamos la altura exacta de la ventana */
+    overflow: hidden; /* Evita desbordes internos */
     display: flex;
     flex-direction: row;
     background-color: white;
 }
 
-.registertype__menu{
+.registertype__menu {
     width: 50%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly; /* Distribuye los elementos uniformemente de arriba a abajo */
     align-items: flex-start; 
-    
+    padding: 30px 40px; /* Padding general para que nada pegue contra los bordes */
 }
 
-.registertype__menu--users{
+.registertype__menu--users {
     width: 100%;
-    height: 10%;
-    margin-top: 150px;
+    margin-top: 0; /* Quitamos el margin-top de 150px que empujaba todo */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Alineado a la izquierda junto con el título */
     flex-direction: row;
     color: rgb(70, 69, 69);
     gap: 10px;
-
 }
 
-.registertype__menu--users img{
-    width: 100px;
-
+.registertype__menu--users img {
+    width: 80px; /* Reducido ligeramente para mejor proporción */
 }
 
-
-
-.registertype__menu--users--iconsstars{
+.registertype__menu--users--iconsstars {
     width: 10%;
-    height: 100%;
+    height: 20px;
     background-image: url('../assets/estrellas.png'); 
-    background-size: cover;       
+    background-size: contain;       
     background-position: center;  
     background-repeat: no-repeat;
 }
 
-.registertype__menu--title{
+.registertype__menu--title {
     width: 100%;
-    height: 20%;
-    display: flex;
-    font-size: 42px;
+    font-size: 38px; /* Ligeramente adaptado para que no rompa en pantallas chicas */
     font-weight: bold;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    padding-left: 60px; 
+    line-height: 1.1;
+    margin: 10px 0;
+    padding-left: 0; /* Quitamos el padding izquierdo fijo y usamos el padding del contenedor padre */
 }
 
-.registertype__menu--parrafo{
-    max-width: 800px;      
-    height: auto;          
-    font-size: 16px;
+.registertype__menu--parrafo {
+    max-width: 800px;        
+    height: auto;         
+    font-size: 15px;
     color: #555;        
-    line-height: 1.6;
-    padding-left: 60px;
-
+    line-height: 1.5;
+    padding-left: 0;
+    margin: 10px 0;
 }
 
-.registertype__menu--button{
+.registertype__menu--button {
     width: 100%;
-    height: 10%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start; /* Alineados ordenadamente */
     align-items: center;
-    margin-top: 100px;
+    gap: 15px; /* Espacio limpio entre botones */
+    margin-top: 0; /* Quitamos el margin-top exagerado */
 }
 
-.registertype__menu--button button{
+.registertype__menu--button button {
     width: auto;
     height: auto;
     background-color: #D32F2F; 
     border: 1px solid transparent;
     color: white;
-    padding: 12px 28px;        
+    padding: 10px 24px;         
     font-size: 14px;           
     font-weight: 600;
     letter-spacing: 0.5px;     
     border-radius: 50px;       
     cursor: pointer;
     transition: all 0.3s ease;
-    
 }
 
 .registertype__menu--button button:hover {
@@ -95,24 +89,23 @@
     transform: translateY(-1px); 
 }
 
-.registertype__imagen{
+.registertype__imagen {
     width: 50%;
-    height: 100%;
+    min-height: 100vh; /* Asegura que la imagen acompañe toda la altura */
     background-image: url('../assets/registertype__imagen_fondo.jpg'); 
     background-size: cover;       
     background-position: center;  
     background-repeat: no-repeat; 
-    
 }
 
-#decoration-none{
+#decoration-none {
     text-decoration: none;
 }
 
-.registertype__menu--Link{
+.registertype__menu--Link {
     width: 100%;
-    height: 10%;
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: center;
+    margin-top: 10px;
 }

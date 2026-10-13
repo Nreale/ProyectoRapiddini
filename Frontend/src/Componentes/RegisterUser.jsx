@@ -49,7 +49,7 @@ function RegisterUser() {
                 <h1>Crea tu cuenta</h1>
                 <p>Pedí tus comidas favoritas en segundos</p>
             </div>
-            <div className='register__from--fields'>
+            <div className='register__from--fields' onSubmit={Registrarse}>
                 <input type="text" value={nombre} placeholder='Nombre' onChange={(e)=> {setNombre(e.target.value)}}/>
                 <input type="text" value={apellido} placeholder='Apellido' onChange={(e)=> {setApellido(e.target.value)}}/>
                 <input type="email" value={email} placeholder='Email' onChange={(e)=> {setEmail(e.target.value)}}/>
@@ -62,12 +62,15 @@ function RegisterUser() {
                 <input type="tel" pattern="\+?[0-9]{8,15}" placeholder="+5491122334455" value={telefono} onChange={(e)=> {setTelefono(e.target.value)}}/>
                 <input type="password" value={contraseña} placeholder='Contraseña' onChange={(e)=> {setContraseña(e.target.value)}}/>
                 <input type="date" value={fecha_nacimiento} placeholder='Fecha Nacimiento' onChange={(e)=> {setFecha(e.target.value)}}/>
+            
+                
             </div>
-            <Link to='/RegisterType'>Volver para atras</Link>
-            {error? (<p>Mensaje: {error.message}</p>):(<></>)}
             <div className='register__from--button'>
                 <button onClick={(e)=>{Registrarse(nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero)}}>ENVIAR</button>
             </div>
+            <Link to='/RegisterType'>Volver para atras</Link>
+            {error? (<p>Mensaje: {error.message}</p>):(<></>)}
+            
             
 
           </div>

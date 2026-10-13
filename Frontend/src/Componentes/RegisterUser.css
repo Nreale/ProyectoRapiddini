@@ -1,30 +1,40 @@
-.register{
+.register {
     width: 100vw;   
     height: 100vh;
+    overflow: hidden; /* Bloquea el scroll general de la página */
     background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.register__form{
-    width: 40%;
-    height: 80%;
+.register__form {
+    width: 100%;
+    max-width: 480px;  
+    height: auto;      
+    max-height: 92vh;  /* Ocupa casi toda la pantalla verticalmente pero sin desbordar */
     background-color: #FFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 5px 15px rgb(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     border-radius: 30px;
+    overflow-y: auto;  /* Agrega scroll interno elegante solo si falta espacio en pantallas pequeñas */
+    overflow-x: hidden;
 }
 
-.register__form--title{
+/* Scrollbar interno más estético y discreto */
+.register__form::-webkit-scrollbar {
+    width: 6px;
+}
+.register__form::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.register__form--title {
     width: 100%;
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
+    padding: 15px 0;   
     background-color: #ff5e62;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -32,70 +42,83 @@
     font-weight: 700;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0; /* Evita que el título se deforme */
 }
 
-.register__form--title p{
-    margin-top: 20px;
+.register__form--title h1 {
+    font-size: 24px;
 }
+
+.register__form--title p {
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
 .register__from--fields {
-    margin-top: 20px;
-    width: 80%;
-    height: 80%;
+    margin: 12px 0;
+    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 8px; /* Espaciado compacto pero cómodo entre cada input/select */
 }
 
-.register__from--fields input{
-    width: 60%;
-    border-radius: 10px;
-    padding: 12px 20px;
-    margin-top: 20px;
-    border-radius: 25px;
+.register__from--fields input,
+.register__from--fields select {
+    width: 85%;        
+    padding: 8px 15px; /* Altura más compacta para que entren todos los campos */
+    border-radius: 20px;
     background-color: #eee;
-    font-size: 15px;
+    font-size: 13px;
     color: #334155;
     outline: none;
     border: none;
 }
 
-.register__from--fields select   {
-    width: 66%;
-    border-radius: 10px;
-    padding: 12px 20px;
-    padding-left: 10px;
-    border: 1px solid #e2e8f0;
-    border-radius: 25px;
-    background-color: #eee;
-    font-size: 15px;
-    color: #334155;
-    outline: none;
-    border: none;
-    margin-top: 20px;
+/* Ajuste específico para los textos o spans adicionales que tenga el repartidor (como "Fecha de Emisión") */
+.register__from--fields span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    width: 85%;
+    text-align: left;
+    margin-top: 4px;
 }
 
-.register__from--button{
+.register__form a {
+    font-size: 13px;
+    margin: 5px 0;
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+.register__form a:hover {
+    text-decoration: underline;
+}
+
+.register__from--button {
     width: 100%;
-    height: 20%;
+    padding: 10px 0 20px 0; 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
-.register__from--button button{
-    width: auto;
-    height: auto;
+.register__from--button button {
     background-color: #D32F2F; 
     border: 1px solid transparent;
     color: white;
-    padding: 12px 28px;        
-    font-size: 14px;           
+    padding: 8px 24px;        
+    font-size: 13px;          
     font-weight: 600;
-    letter-spacing: 0.5px;     
-    border-radius: 50px;       
+    border-radius: 50px;      
     cursor: pointer;
     transition: all 0.3s ease;
-    
 }
 
 .register__from--button button:hover {

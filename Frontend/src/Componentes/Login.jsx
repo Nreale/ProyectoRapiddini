@@ -31,7 +31,7 @@ function Login() {
       navigate('/')//aca va la pag principal
     }catch (error) {
       console.log('Se ha producido un error')
-      const mensajeServidor = error.response?.data?.error || 'Email o contraseña incorrectos'
+      const mensajeServidor = error.response?.data?.message || "Error inesperado"
       setErrorMsg(mensajeServidor)
     }
 
