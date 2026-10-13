@@ -7,24 +7,10 @@ const Repartidores = sequelize.define('Repartidores', {
         autoIncrement: true,
         primaryKey: true
     },
-    nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },
-    apellido: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        
-    },
     vehiculo: {
         type: DataTypes.STRING(100),
         allowNull: false,
         
-    },
-    telefono: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
     },
     estado: {
         type: DataTypes.BOOLEAN,
