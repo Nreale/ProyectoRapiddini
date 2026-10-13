@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import './Login.css'
 import axios from "axios"
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
   const HabilitedLogin = email.trim() !== '' && password.trim() !== ''
 
-  const [Token, setToken] = useState('')
-
+  const navigate = useNavigate()
 
   const changePassword = (e) => {
     setPassword(e.target.value)
@@ -19,16 +19,20 @@ function Login() {
     setEmail(e.target.value)
   }
 
-  const CallLogin = async () => {
+  const CallLogin = async (e) => {
+    setErrorMsg('')
+    e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:3000/users/login', {
+      const response = await axios.post('http://localhost:3000/Usuario/IniciarSesion', {
         email: email.trim(),
         password: password.trim()
       })
-      setToken(response.data.token)
-      alert('Login realizado con exito')
+      localStorage.setItem('token', response.data.token)
+      navigate('/')//aca va la pag principal
     }catch (error) {
       console.log('Se ha producido un error')
+      const mensajeServidor = error.response?.data?.error || 'Email o contraseña incorrectos'
+      setErrorMsg(mensajeServidor)
     }
 
   }
@@ -45,6 +49,8 @@ function Login() {
               <p>Contraseña</p>
               <input onChange={changePassword} type="password" placeholder='Ingrese su contraseña' />
             </div>
+            
+            {errorMsg && <p style={{ color: 'red', fontSize: '14px', margin: '5px 0' }}>{errorMsg}</p>}
           
             <div className='login__button--proceed'>
               <button type='submit' disabled={!HabilitedLogin}>Iniciar Sesion</button>
@@ -60,8 +66,7 @@ function Login() {
               <button>Registrarse</button>
             </Link>
             
-            
-            <Link className='login__buttons--decoration' to='/Home'>
+            <Link className='login__buttons--decoration' to='/'> 
               <button>Volver</button>
             </Link>
             

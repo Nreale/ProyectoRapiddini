@@ -1,15 +1,16 @@
-const {Usuarios} = require('./usuariosModel');
-const {Sucursales} = require('./sucursalesModel');
-const {Repartidores} = require('./repartidoresModel');
-const {Productos} = require('./productosModel');
-const {Pedidos} = require('./pedidosModel');
-const {Locales} = require('./localesModel');
-const {Direcciones} = require('./direccionesModel');
-const {Detalle_Pedido} = require('./detalles_pedidosModel');
-const {Categorias} = require('./categoriasModel');
-const {Permisos} = require('./permisosModel');
+const {Usuarios} = require('./usuariosModel')
+const {Sucursales} = require('./sucursalesModel')
+const {Repartidores} = require('./repartidoresModel')
+const {Productos} = require('./productosModel')
+const {Pedidos} = require('./pedidosModel')
+const {Locales} = require('./localesModel')
+const {Direcciones} = require('./direccionesModel')
+const {Detalle_Pedido} = require('./detalles_pedidosModel')
+const {Categorias} = require('./categoriasModel')
+const {Permisos} = require('./permisosModel')
 const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
+const {LicenciasConducir} = require('./licencia_conducirModel')
 
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
@@ -51,6 +52,9 @@ Usuarios.belongsToMany(Roles, { through: 'Roles_Usuario', foreignKey: 'Id_Usuari
 Permisos.belongsToMany(Usuarios, { through: 'Permisos_Usuarios', foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
 Usuarios.belongsToMany(Permisos, { through: 'Permisos_Usuarios', foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
 
+Repartidores.hasMany(LicenciasConducir, { foreignKey: 'ID_Repartidor' });
+LicenciasConducir.belongsTo(Repartidores, { foreignKey: 'ID_Repartidor' });
+
 module.exports = {
     Usuarios,
     Sucursales,
@@ -63,5 +67,6 @@ module.exports = {
     Categorias,
     Vendedores,
     Roles,
-    Permisos
+    Permisos,
+    LicenciasConducir
 };

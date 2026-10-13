@@ -8,6 +8,7 @@ import Register from './Componentes/Register'
 import RegisterType from './Componentes/RegisterType'
 import RegisterUser from './Componentes/RegisterUser'
 import RegisterVendedor from './Componentes/RegisterVendedor'
+import RegisterRepartidor from './Componentes/RegisterRepartidores'
 
 function App() {
   return (
@@ -29,6 +30,12 @@ function App() {
       <footer>
         
       </footer>
+      <Routes>
+        <Route element={<Login/>} path='/Login'></Route>
+        <Route element={<RegisterType/>} path='/RegisterType'></Route>
+        <Route element={<RegisterUser/>} path='/RegisterUser'></Route>
+        <Route element={<RegisterVendedor/>} path='/RegisterVendedor'></Route>
+      </Routes>
     </>
   )
 }
