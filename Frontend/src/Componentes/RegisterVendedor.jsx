@@ -1,21 +1,22 @@
 
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import './Login.css'
 import axios from "axios"
 import './RegisterVendedor.css'
 
 function RegisterVendedor() {
-  const [nombre, setNombre] = useState("")
-  const [apellido, setApellido] = useState("")
-  const [email, setEmail] = useState("")
-  const [telefono, setTelefono] = useState("")
-  const [contraseña, setContraseña] = useState("")
-  const [fecha_nacimiento, setFecha] = useState("")
-  const [genero, setGenero] = useState("")
-  const [CUIT, setCuit] = useState("")
-  const [Razon_Social, setRazon_social] = useState("")
-  const [error, setError] = useState()
+    const navigate = useNavigate()
+    const [nombre, setNombre] = useState("")
+    const [apellido, setApellido] = useState("")
+    const [email, setEmail] = useState("")
+    const [telefono, setTelefono] = useState("")
+    const [contraseña, setContraseña] = useState("")
+    const [fecha_nacimiento, setFecha] = useState("")
+    const [genero, setGenero] = useState("")
+    const [CUIT, setCuit] = useState("")
+    const [Razon_Social, setRazon_social] = useState("")
+    const [error, setError] = useState()
 
 
   const RegistrarVendedor = async (nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social) => {
@@ -33,7 +34,9 @@ function RegisterVendedor() {
             genero
         })
 
-
+        if (response.status === 201) {
+            navigate('/Login'); // Cambia '/login' por la ruta exacta que tengas configurada en tu Router
+        }
     } catch (error) {
         console.error("Error en la petición:", error)
         if (error.response) {

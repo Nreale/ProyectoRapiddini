@@ -62,7 +62,7 @@ function Login() {
               <p>¿Nuevo por acá? Registrate para hacer tus pedidos o volvé al inicio.</p>
             </div>
             
-            <Link className='login__buttons--decoration' to='/Register'>
+            <Link className='login__buttons--decoration' to='/RegisterType'>
               <button>Registrarse</button>
             </Link>
             

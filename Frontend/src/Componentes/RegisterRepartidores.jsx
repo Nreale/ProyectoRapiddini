@@ -1,11 +1,12 @@
 
-    import { useState } from 'react'
-    import {Link} from 'react-router-dom'
-    import './Login.css'
-    import axios from "axios"
-    import './RegisterRepartidor.css'
+import { useState } from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import './Login.css'
+import axios from "axios"
+import './RegisterRepartidor.css'
 
-    function RegisterRepartidor() {
+function RegisterRepartidor() {
+    const navigate = useNavigate()
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
     const [email, setEmail] = useState("")
@@ -37,7 +38,9 @@
                 tipo_licencia
             })
 
-
+            if (response.status === 201) {
+                navigate('/Login'); // Cambia '/login' por la ruta exacta que tengas configurada en tu Router
+            }
         } catch (error) {
             console.error("Error en la petición:", error)
             if (error.response) {

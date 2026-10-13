@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import axios from "axios";
 import './RegisterUser.css'
 
 function RegisterUser() {
+    const navigate = useNavigate()
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
     const [email, setEmail] = useState("")
@@ -28,7 +29,9 @@ function RegisterUser() {
 
             })
 
-            console.log(response.data)
+            if (response.status === 201) {
+                navigate('/Login'); // Cambia '/login' por la ruta exacta que tengas configurada en tu Router
+            }
         } catch (error) {
             console.error("Error en la petición:", error)
             if (error.response) {

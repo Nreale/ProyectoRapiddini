@@ -33,6 +33,10 @@ function RegisterType() {
                       <button>Repartidor</button>
                   </Link>
               </div>
+              <div className='registertype__menu--Link'>
+                <Link to='/'>Volver para atras</Link>
+              </div>
+              
             </div>
             <div className='registertype__imagen'> 
                 
