@@ -1,41 +1,74 @@
 const { Vendedores, Usuarios } = require('../models/index.js');
+const {sequelize} = require('../config/db.js');
+const bcrypt = require('bcrypt');
+const { DATE } = require('sequelize');
 
 
 const postRegistrarVendedor = async (req, res) =>{
+    const t = await sequelize.transaction();
+
     try {
+        const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social } = req.body;
+        if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero || !CUIT || !Razon_Social) {
+            await t.rollback();
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+
+        const usuario = await Usuarios.findOne({ 
+            where: { email, isActive: true } 
+        });
+
+        if (usuario) {
+            await t.rollback();
+            return res.status(409).json({ message: "Este email ya está registrado" });
+        }
+
+        // 2. Validar si el CUIT ya existe en la tabla de Vendedores
+        const vendedor = await Vendedores.findOne({ 
+            where: { CUIT } 
+        });
+
+        if (vendedor) {
+            await t.rollback();
+            return res.status(409).json({ message: "Este CUIT ya se encuentra registrado" });
+        }
+
+        const hashedPassword = await bcrypt.hash(contraseña, 12);
         
-        const { CUIT, Razon_Social, telefono, Id_Usuario } = req.body;
+        const nuevoUsuario = await Usuarios.create({
+            nombre,
+            apellido,
+            email,
+            telefono,
+            contraseña: hashedPassword,
+            fecha_nacimiento,
+            genero,
+            isActive: true
+        }, { transaction: t });
 
-        if (!CUIT || !Razon_Social || !telefono || !Id_Usuario) {
-            return res.status(400).json({ 
-                mensaje: "Faltan parámetros obligatorios (CUIT, Razon_Social, telefono, Id_Usuario)" 
-            })
-        }
-
-        const usuarioExiste = await Usuarios.findByPk(Number(Id_Usuario));
-        if (!usuarioExiste) {
-            return res.status(404).json({ mensaje: "El usuario especificado no existe" })
-        }
-
-        const vendedorExistente = await Vendedores.findOne({ where: { Id_Usuario } });
-        if (vendedorExistente) {
-            return res.status(409).json({ mensaje: "Este usuario ya tiene un perfil de vendedor registrado" })
-        }
-
+        
         const nuevoVendedor = await Vendedores.create({
             CUIT,
             Razon_Social,
-            telefono,
-            Id_Usuario
-        })
+            Id_Usuario: nuevoUsuario.id,
+            isActive: true,
+            fecha_registro_comercial: Date.now()
+        }, { transaction: t });
+
+        
+        await t.commit();
 
         return res.status(201).json({
-            mensaje: "Perfil de vendedor registrado con éxito",
+            message: "Usuario y vendedor registrados con éxito",
+            usuario: nuevoUsuario,
             vendedor: nuevoVendedor
-        })
+        });
 
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        // Si algo falla en el proceso, revertimos todo lo hecho en la base de datos
+        console.log(error)
+        await t.rollback();
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -70,7 +103,7 @@ const getVendedores = async (req, res) => {
                 attributes: ['nombre', 'apellido', 'email']
             }
         })
-        if(Vendedores.length === 0){
+        if(vendedores.length === 0){
             return res.status(404).json({ mensaje: "No hay vendedores registrados" })
         }
         return res.status(200).json(vendedores)

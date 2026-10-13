@@ -1,4 +1,6 @@
-const { Repartidores } = require('../models/index.js');
+const { Repartidores, Usuarios, LicenciasConducir } = require('../models/index.js');
+const {sequelize} = require('../config/db.js')
+const bcrypt = require('bcrypt');
 
 const getRepartidores = async (req, res) => {
     try {
@@ -35,46 +37,69 @@ const getRepartidor = async (req, res) => {
 };
 
 const postAgregarRepartidor = async (req, res) => {
-    try {
-        const {
-            nombre,
-            estado,
-            nacionalidad,
-            vehiculo,
-            ID_Licencia
-        } = req.body;
+    const t = await sequelize.transaction();
 
-        if (
-            !nombre ||
-            estado === undefined ||
-            !nacionalidad ||
-            !vehiculo ||
-            ID_Licencia === undefined
-        ) {
-            return res.status(400).json({
-                mensaje: "Faltan parametros"
-            });
+    try {
+        const {nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, nacionalidad, vehiculo, fecha_emision, tipo_licencia} = req.body;
+
+        
+        if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero  || !nacionalidad || !vehiculo || !fecha_emision || !tipo_licencia) {
+            await t.rollback();
+            return res.status(400).json({ message: "Faltan parámetros obligatorios" });
         }
 
-        const repartidor = await Repartidores.create({
+        const usuario = await Usuarios.findOne({ 
+            where: { email },
+            transaction: t 
+        });
+
+        if (usuario) {
+            await t.rollback();
+            return res.status(409).json({ message: "Este email ya se encuentra registrado" });
+        }
+
+        const hashedPassword = await bcrypt.hash(contraseña, 12);
+
+        const nuevo_usuario = await Usuarios.create({
             nombre,
-            estado,
+            apellido,
+            email,
+            telefono,
+            contraseña: hashedPassword,
+            fecha_nacimiento,
+            genero,
+            isActive: true
+        }, { transaction: t });
+
+        const nuevo_repartidor = await Repartidores.create({
+            estado: true,
             nacionalidad,
             vehiculo,
-            ID_Licencia
-        });
+            Id_Usuario: nuevo_usuario.id 
+        }, { transaction: t });
+
+        const nueva_licencia = await LicenciasConducir.create({
+            fecha_emision,
+            fecha_registro: Date.now(),
+            Tipo: tipo_licencia,
+            ID_Repartidor: nuevo_repartidor.id 
+        }, { transaction: t });
+
+        
+        await t.commit();
 
         return res.status(201).json({
-            mensaje: "Repartidor agregado correctamente",
-            repartidor
-        });
+            message: "Repartidor, usuario y licencia registrados exitosamente", usuarioId: nuevo_usuario.id, repartidorId: nuevo_repartidor.id, licenciaId: nueva_licencia.id});
 
     } catch (error) {
-        return res.status(500).json({
-            error: error.message
-        });
+        await t.rollback();
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(409).json({ message: "Ya existe un registro con datos únicos duplicados." });
+        }
+        console.log(error)
+        return res.status(500).json({error: error.message});
     }
-};
+}
 
 const patchModificarRepartidor = async (req, res) => {
     try {
