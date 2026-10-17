@@ -78,6 +78,7 @@ const getVendedorByPK = async (req, res) => {
             return res.status(400).json({mensaje: "Falta el id"})
         }
         const vendedor = await Vendedores.findByPk(Number(req.params.id),{
+            where: {isActive: true},
             include: { 
                 model: Usuarios, 
                 attributes: ['nombre', 'apellido', 'email'] 

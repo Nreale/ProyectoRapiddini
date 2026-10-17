@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Header.css'
 import { useLocation } from 'react-router-dom'
 import logo from '../assets/logo_placeholder.jpg';
+import carritoCompras from '../assets/carritoComprasLogo.png';
+import usuarioLogo from '../assets/usuario.png';
 
 function Cabecera() {
     const [estadoToken, setEestadoToken] = useState(false)
     const [busqueda, setBusqueda] = useState('')
     const location = useLocation();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setEestadoToken(true);
+        } else {
+            setEestadoToken(false);
+        }
+    }, [location]);
 
     if (
         location.pathname === '/Login' || 
@@ -30,7 +41,7 @@ function Cabecera() {
       <div className='menu'>
 
         <div className='menu__logo'>
-            <Link to="/">
+            <Link to="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1">
                 <img src={logo} alt="Logo de la app" className="menu__logo-img" />
             </Link>
         </div>
@@ -50,8 +61,16 @@ function Cabecera() {
         
         {estadoToken ? (
             <div className='menu__buttons'>
-                <div className='menu__icons'></div>
-                <div className='menu__icons'></div>    
+                <div className='menu__icons'>
+                    <Link id='icon--link' to='/Carrito'>
+                        <img src={carritoCompras} alt="" height={57} />
+                    </Link>
+                </div>
+                <div className='menu__icons'>
+                    <Link id='icon--link' to='/Configuracion'>
+                        <img src={usuarioLogo} alt="" height={57} />
+                    </Link>
+                </div>    
             </div>
         ) : (
             <div className='menu__buttons'>
@@ -73,4 +92,4 @@ function Cabecera() {
   )
 }
 
-export default Cabecera
+export default Cabecera;

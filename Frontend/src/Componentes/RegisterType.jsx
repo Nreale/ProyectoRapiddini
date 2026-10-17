@@ -16,12 +16,12 @@ function RegisterType() {
               <div className='registertype__menu--title'>
                 <h1>Forma parte de nuestra comunidad.</h1>
               </div>
-              <br />
-              <br />
-              <br />
+              
+              
               <div className='registertype__menu--parrafo'>
                 <p>Llevamos tus antojos y compras del día directo a tu puerta en minutos! Disfruta del servicio más rápido, cómodo y confiable con las mejores tiendas de la ciudad al alcance de tu mano</p>
               </div>
+              <br />
               <div className='registertype__menu--button'>
                   <Link id='decoration--none' to='/RegisterUser'>
                     <button>Usuario</button>
