@@ -99,6 +99,16 @@
   justify-content: center;
 }
 
+#icon--link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  
+}
+
 .menu__logo a {
   display: flex;
   align-items: center;
