@@ -62,11 +62,7 @@ const postAgregarProducto = async (req, res) => {
 
 const deletedBorrarProducto = async (req, res) => {
     try {
-        //REVISAR LOGICA SI SE PUEDE BORRAR POR EL NOMBRE, YA QUE PUEDEN HABER VARIAS LUGAR CON EL MISMO PRODUCTO, PERO COMO SE DEBE VERFICAR ANTES QUE 
-        //EL PROPIO LOCAL LO QUIERA BORRAR DEBERIA FUNCIONAR YA QUE UN LOCAL NO TIENE DOS PRODUCTOS IGUALES
-        //OSEA QUE EL NOMBRE SERIA UNICO DENTRO DE LOS PRODUCTO DEL LOCAL
-
-        //HACER QUE BORRE PRESIONANDO UN BOTON EN EL FRONTEND
+        
 
         if (req.params.nombre === undefined) {
             return res.status(400).json("Poner nombre del producto")
@@ -74,7 +70,7 @@ const deletedBorrarProducto = async (req, res) => {
         const producto = await Productos.destroy({
             where: {
                 nombre: req.params.nombre,
-                id_Local: Number(req.params.id_local) //ARREGLAR CON INCLUIDE, hacer validacion de permisos
+                id_Local: Number(req.params.id_local) 
             }
         })
 
@@ -99,7 +95,7 @@ const patchModificarProducto = async (req, res) => {
             return res.status(404).json({ mensaje: "Producto no encontrado", estado: false });
         }
 
-        //FALTA HACER EL INCLUIDE
+        
         await producto.update({
             nombre,
             descripcion,

@@ -29,7 +29,7 @@ const Productos = sequelize.define('Productos', {
         type: DataTypes.INTEGER,
         allowNull: false
     }
-    
+
     
 }, {
     tableName: 'productos',

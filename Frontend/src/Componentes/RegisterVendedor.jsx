@@ -35,7 +35,7 @@ function RegisterVendedor() {
         })
 
         if (response.status === 201) {
-            navigate('/Login'); // Cambia '/login' por la ruta exacta que tengas configurada en tu Router
+            navigate('/Login'); 
         }
     } catch (error) {
         console.error("Error en la petición:", error)

@@ -28,7 +28,7 @@ function Login() {
         password: password.trim()
       })
       localStorage.setItem('token', response.data.token)
-      navigate('/')//aca va la pag principal
+      navigate('/')
     }catch (error) {
       console.log('Se ha producido un error')
       const mensajeServidor = error.response?.data?.error || 'Email o contraseña incorrectos'
