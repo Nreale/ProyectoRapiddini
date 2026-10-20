@@ -75,5 +75,8 @@ module.exports = {
     Vendedores,
     Roles,
     Permisos,
-    LicenciasConducir
+    LicenciasConducir,
+    RolesUsuario,
+    PermisosUsuarios
+
 };
