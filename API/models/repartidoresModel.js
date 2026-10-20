@@ -21,6 +21,10 @@ const Repartidores = sequelize.define('Repartidores', {
     nacionalidad: {
         type: DataTypes.STRING(100),
         allowNull: false,
+    },
+    Id_Usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
     
 }, {

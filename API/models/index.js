@@ -11,13 +11,17 @@ const {Permisos} = require('./permisosModel')
 const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
 const {LicenciasConducir} = require('./licencia_conducirModel')
-
+const {RolesUsuario} = require('./RolesUsuarioModel'); 
+const {PermisosUsuarios} = require('./PermisosUsuariosModel');
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
 Direcciones.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
 
 Usuarios.hasMany(Vendedores, { foreignKey: 'Id_Usuario' });
 Vendedores.belongsTo(Usuarios, { foreignKey: 'Id_Usuario' });
+
+Usuarios.hasMany(Repartidores, { foreignKey: 'Id_Usuario' });
+Repartidores.belongsTo(Usuarios, { foreignKey: 'Id_Usuario' });
 
 Usuarios.hasMany(Pedidos, {foreignKey: 'Id_Usuario'});
 Pedidos.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
@@ -43,14 +47,17 @@ Locales.hasMany(Productos, {foreignKey: 'Id_Local'});
 Sucursales.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'});
 
+Vendedores.belongsToMany(Locales, {through: 'Vendedores_Localidades', foreignKey: 'ID_Vendedor', otherKey: 'ID_Local'});
+Locales.belongsToMany(Vendedores, {through: 'Vendedores_Localidades', foreignKey: 'ID_Local', otherKey: 'ID_Vendedor'});
+
 Permisos.belongsToMany(Roles, { through: 'Permisos_Roles', foreignKey: 'Id_Permisos', otherKey: 'Id_Rol' });
 Roles.belongsToMany(Permisos, { through: 'Permisos_Roles', foreignKey: 'Id_Rol', otherKey: 'Id_Permisos' });
 
-Roles.belongsToMany(Usuarios, { through: 'Roles_Usuario', foreignKey: 'Id_Rol', otherKey: 'Id_Usuario' });
-Usuarios.belongsToMany(Roles, { through: 'Roles_Usuario', foreignKey: 'Id_Usuario', otherKey: 'Id_Rol' });
+Roles.belongsToMany(Usuarios, { through: RolesUsuario, foreignKey: 'Id_Rol', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Roles, { through: RolesUsuario, foreignKey: 'Id_Usuario', otherKey: 'Id_Rol' });
 
-Permisos.belongsToMany(Usuarios, { through: 'Permisos_Usuarios', foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
-Usuarios.belongsToMany(Permisos, { through: 'Permisos_Usuarios', foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
+Permisos.belongsToMany(Usuarios, { through: PermisosUsuarios, foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Permisos, { through: PermisosUsuarios, foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
 
 Repartidores.hasMany(LicenciasConducir, { foreignKey: 'ID_Repartidor' });
 LicenciasConducir.belongsTo(Repartidores, { foreignKey: 'ID_Repartidor' });
