@@ -6,7 +6,7 @@ const getLocales = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            data: locales
+            locales
         });
 
     } catch (error) {

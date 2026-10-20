@@ -5,7 +5,7 @@ const obtenerCategorias = async (req, res) => {
         const categorias = await Categorias.findAll();
         return res.status(200).json({
             success: true,
-            data: categorias
+            categorias
         });
     } catch (error) {
         return res.status(500).json({

@@ -4,7 +4,9 @@ import "./CategoriaCard.css";
 function CategoriaCard({ titulo }) {
   return (
     <div className="categoria-card">
-      <div className="categoria-card__image-placeholder"></div>
+      <div className="categoria-card__image-placeholder">
+        <img src="" alt="" />
+      </div>
       {titulo && <span className="categoria-card__title">{titulo}</span>}
     </div>
   );

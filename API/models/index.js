@@ -11,8 +11,8 @@ const {Permisos} = require('./permisosModel')
 const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
 const {LicenciasConducir} = require('./licencia_conducirModel')
-const {RolesUsuario} = require('./roles_usuariosModel'); 
-const {PermisosUsuarios} = require('./permisos_usuariosModel');
+const {RolesUsuario} = require('./roles_usuariosModel');
+
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
 Direcciones.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
@@ -56,8 +56,8 @@ Roles.belongsToMany(Permisos, { through: 'Permisos_Roles', foreignKey: 'Id_Rol',
 Roles.belongsToMany(Usuarios, { through: RolesUsuario, foreignKey: 'Id_Rol', otherKey: 'Id_Usuario' });
 Usuarios.belongsToMany(Roles, { through: RolesUsuario, foreignKey: 'Id_Usuario', otherKey: 'Id_Rol' });
 
-Permisos.belongsToMany(Usuarios, { through: PermisosUsuarios, foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
-Usuarios.belongsToMany(Permisos, { through: PermisosUsuarios, foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
+Permisos.belongsToMany(Usuarios, { through: 'PermisosUsuarios', foreignKey: 'Id_Permisos', otherKey: 'Id_Usuario' });
+Usuarios.belongsToMany(Permisos, { through: 'PermisosUsuarios', foreignKey: 'Id_Usuario', otherKey: 'Id_Permisos' });
 
 Repartidores.hasMany(LicenciasConducir, { foreignKey: 'ID_Repartidor' });
 LicenciasConducir.belongsTo(Repartidores, { foreignKey: 'ID_Repartidor' });
@@ -76,7 +76,6 @@ module.exports = {
     Roles,
     Permisos,
     LicenciasConducir,
-    RolesUsuario,
-    PermisosUsuarios
+    RolesUsuario
 
 };

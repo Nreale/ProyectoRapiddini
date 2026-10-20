@@ -1,4 +1,4 @@
-const { Usuarios, Roles } = require('../models/index.js');
+const { Usuarios, RolesUsuario, Roles } = require('../models/index.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -66,6 +66,7 @@ const postRegistrarUsuario = async (req, res) => {
             usuario.genero = genero;
             usuario.isActive = true
             await usuario.save();
+            
             return res.status(201).json({message: "Usuario creado correctamente", estado: true, id: usuario.id})
         }
 
@@ -90,7 +91,11 @@ const postRegistrarUsuario = async (req, res) => {
             isActive: true          
         })
 
-        await nuevo_usuario.addRoles(rol)
+        await nuevo_usuario.addRoles(rol, {
+            through: {
+                DVH: "WIHDABDWHAD" 
+            }
+        });
         
         return res.status(201).json({message: "Usuario Creado Correctamente", estado: true, id: nuevo_usuario.id})
         

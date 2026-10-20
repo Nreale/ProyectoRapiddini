@@ -34,7 +34,7 @@ function RegisterUser() {
         } catch (error) {
             console.error("Error en la petición:", error);
             if (error.response && error.response.data) {
-                const mensajeError = error.response.data.error || error.response.data.message || "Error al registrarse";
+                const mensajeError = error.response.data.message || "Error al registrarse";
                 setError(mensajeError);
             }
         }
