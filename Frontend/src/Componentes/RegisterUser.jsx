@@ -33,8 +33,9 @@ function RegisterUser() {
             }
         } catch (error) {
             console.error("Error en la petición:", error);
-            if (error.response) {
-                setError(error.response.data);
+            if (error.response && error.response.data) {
+                const mensajeError = error.response.data.error || error.response.data.message || "Error al registrarse";
+                setError(mensajeError);
             }
         }
     };
