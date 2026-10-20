@@ -103,7 +103,7 @@ const postRegistrarUsuario = async (req, res) => {
 const deletedBorrarUsuario = async (req, res) => {
     try {
 
-        if (req.params.id === undefined) {
+        if (req.user.id === undefined) {
             return res.status(400).json({message: "Parametros incompletos"})
         }
         
