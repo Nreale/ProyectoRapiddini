@@ -7,6 +7,8 @@ import RegisterType from './Componentes/RegisterType'
 import RegisterUser from './Componentes/RegisterUser'
 import RegisterVendedor from './Componentes/RegisterVendedor'
 import RegisterRepartidor from './Componentes/RegisterRepartidores'
+import Configuracion from './Componentes/Configuracion';
+
 function App() {
   return (
     <>
@@ -28,6 +30,8 @@ function App() {
         <Route element={<RegisterUser/>} path='/RegisterUser'></Route>
         <Route element={<RegisterVendedor/>} path='/RegisterVendedor'></Route>
         <Route element={<RegisterRepartidor/>} path='/RegisterRepartidor'></Route>
+        <Route element={<Configuracion />} path="/Configuracion"></Route>
+
       </Routes>
     </>
   )
