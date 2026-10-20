@@ -108,4 +108,15 @@
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    transition: color 0.2s ease;
+    font-size: 12px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.registertype__menu--Link:hover {
+    color: #ff5e62;
+    text-decoration: underline;
 }

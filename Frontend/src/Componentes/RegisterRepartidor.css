@@ -1,3 +1,132 @@
-#repartidor{
-    height: 90%;
+.repartidor-reg {
+    width: 100vw;   
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.repartidor-reg__card {
+    width: 100%;
+    max-width: 480px;  
+    max-height: 90vh;  
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    overflow-y: auto;  
+    overflow-x: hidden;
+}
+
+.repartidor-reg__card::-webkit-scrollbar {
+    width: 6px;
+}
+.repartidor-reg__card::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.repartidor-reg__header {
+    width: 100%;
+    padding: 18px 0;   
+    background-color: #ff5e62;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    color: white;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.repartidor-reg__header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.repartidor-reg__header p {
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.repartidor-reg__fields {
+    padding: 18px 0;
+    width: 82%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.repartidor-reg__fields input,
+.repartidor-reg__fields select {
+    width: 100%;        
+    padding: 9px 14px; 
+    border-radius: 20px;
+    background-color: #f1f3f5;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+
+.repartidor-reg__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 4px;
+    text-align: left;
+    width: 100%;
+}
+
+.repartidor-reg__error {
+    color: #d32f2f;
+    font-size: 12px;
+    text-align: center;
+    margin: 4px 0;
+}
+
+.repartidor-reg__footer {
+    width: 100%;
+    padding: 10px 0 20px 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.repartidor-reg__btn-submit {
+    background-color: #D32F2F; 
+    border: none;
+    color: white;
+    padding: 10px 32px;         
+    font-size: 13px;           
+    font-weight: 600;
+    border-radius: 50px;      
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.repartidor-reg__btn-submit:hover {
+    background-color: #222222;
+    transform: translateY(-1px); 
+}
+
+.repartidor-reg__link-back {
+    font-size: 12px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.repartidor-reg__link-back:hover {
+    color: #ff5e62;
+    text-decoration: underline;
 }

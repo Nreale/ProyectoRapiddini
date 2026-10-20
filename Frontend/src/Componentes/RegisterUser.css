@@ -1,129 +1,126 @@
-.register {
+.user-reg {
     width: 100vw;   
     height: 100vh;
-    overflow: hidden; /* Bloquea el scroll general de la página */
+    overflow: hidden;
     background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.register__form {
+.user-reg__card {
     width: 100%;
-    max-width: 480px;  
-    height: auto;      
-    max-height: 92vh;  /* Ocupa casi toda la pantalla verticalmente pero sin desbordar */
-    background-color: #FFFF;
+    max-width: 500px;  
+    max-height: 90vh;  
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    border-radius: 30px;
-    overflow-y: auto;  /* Agrega scroll interno elegante solo si falta espacio en pantallas pequeñas */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    overflow-y: auto;  
     overflow-x: hidden;
 }
 
-/* Scrollbar interno más estético y discreto */
-.register__form::-webkit-scrollbar {
+.user-reg__card::-webkit-scrollbar {
     width: 6px;
 }
-.register__form::-webkit-scrollbar-thumb {
+.user-reg__card::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 }
 
-.register__form--title {
+.user-reg__header {
     width: 100%;
-    padding: 15px 0;   
+    padding: 18px 0;   
     background-color: #ff5e62;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
     color: white;
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     text-align: center;
-    flex-shrink: 0; /* Evita que el título se deforme */
-}
-
-.register__form--title h1 {
-    font-size: 24px;
-}
-
-.register__form--title p {
-    margin-top: 2px;
-    font-size: 13px;
-    font-weight: normal;
-}
-
-.register__from--fields {
-    margin: 12px 0;
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px; /* Espaciado compacto pero cómodo entre cada input/select */
-}
-
-.register__from--fields input,
-.register__from--fields select {
-    width: 85%;        
-    padding: 8px 15px; /* Altura más compacta para que entren todos los campos */
-    border-radius: 20px;
-    background-color: #eee;
-    font-size: 13px;
-    color: #334155;
-    outline: none;
-    border: none;
-}
-
-/* Ajuste específico para los textos o spans adicionales que tenga el repartidor (como "Fecha de Emisión") */
-.register__from--fields span {
-    font-size: 12px;
-    font-weight: bold;
-    color: #555;
-    width: 85%;
-    text-align: left;
-    margin-top: 4px;
-}
-
-.register__form a {
-    font-size: 13px;
-    margin: 5px 0;
-    color: #4f46e5;
-    text-decoration: none;
-}
-
-.register__form a:hover {
-    text-decoration: underline;
-}
-
-.register__from--button {
-    width: 100%;
-    padding: 10px 0 20px 0; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-shrink: 0;
 }
 
-.register__from--button button {
-    background-color: #D32F2F; 
+.user-reg__header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.user-reg__header p {
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.user-reg__fields {
+    padding: 20px 0;
+    width: 82%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-reg__fields input,
+.user-reg__fields select {
+    width: 100%;        
+    padding: 10px 14px; 
+    border-radius: 20px;
+    background-color: #f1f3f5;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
     border: 1px solid transparent;
+    box-sizing: border-box;
+    
+}
+
+
+
+.user-reg__error {
+    color: #d32f2f;
+    font-size: 12px;
+    text-align: center;
+    margin: 4px 0;
+}
+
+.user-reg__footer {
+    width: 100%;
+    padding: 10px 0 20px 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.user-reg__btn-submit {
+    background-color: #D32F2F; 
+    border: none;
     color: white;
-    padding: 8px 24px;        
-    font-size: 13px;          
+    padding: 10px 32px;         
+    font-size: 13px;           
     font-weight: 600;
     border-radius: 50px;      
     cursor: pointer;
-    transition: all 0.3s ease;
+    
 }
 
-.register__from--button button:hover {
-    background-color: #333333;
+.user-reg__btn-submit:hover {
+    background-color: #222222;
     transform: translateY(-1px); 
+}
+
+.user-reg__link-back {
+    font-size: 12px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.user-reg__link-back:hover {
+    color: #ff5e62;
+    text-decoration: underline;
 }
 
 
