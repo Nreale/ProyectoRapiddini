@@ -3,7 +3,7 @@ const { getLocales, getLocal, postAgregarLocal, patchModificarLocal, deleteBorra
 const router = Router();
 
 router.get('/ObtenerLocales', getLocales);
-router.get('/BuscarLocal/:id_local', getLocal);
+router.get('/BuscarLocal/:nombre', getLocal);
 router.post('/AgregarLocal', postAgregarLocal);
 router.patch('/ModificarLocal/:id_local', patchModificarLocal);
 router.delete('/BorrarLocal/:id_local', deleteBorrarLocal);

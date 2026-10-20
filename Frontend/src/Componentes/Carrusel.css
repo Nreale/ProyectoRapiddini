@@ -1,11 +1,86 @@
 .carrusel-container {
-  width: 100%;
-  height: 220px;
-  background-color: #ffffff;
-  border: 2px solid #222;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.carrusel-titulo {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.carrusel-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+    scroll-behavior: smooth;
+}
+
+.carrusel-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carrusel-grid::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.local-card {
+    min-width: 250px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.local-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.local-nombre {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+.local-telefono {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.local-estado {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.local-estado.activo {
+    background-color: #e6f4ea;
+    color: #137333;
+}
+
+.local-estado.inactivo {
+    background-color: #fce8e6;
+    color: #c5221f;
+}
+
+.carrusel-loading,
+.carrusel-vacio {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #777;
 }
