@@ -8,6 +8,8 @@ const RolesRoutes = require('./routers/RolesRoutes.js');
 const PermisosRoutes = require('./routers/PermisosRotes.js');
 const VendedorRoutes = require('./routers/VendedoresRoutes.js')
 const RepartidorRoutes = require('./routers/RepartidoresRoutes.js')
+const LocalesRoutes = require('./routers/LocalesRoutes.js')
+const CategoriasRoutes = require('./routers/CategoriasRoutes.js')
 
 const server = express();
 server.use(express.json());
@@ -32,6 +34,8 @@ server.use('/Roles', RolesRoutes)
 server.use('/Permisos', PermisosRoutes)
 server.use('/Vendedor', VendedorRoutes)
 server.use('/Repartidores', RepartidorRoutes)
+server.use('/Locales', LocalesRoutes)
+server.use('/Categorias', CategoriasRoutes)
 
 server.listen(3000, async () => {
         try {

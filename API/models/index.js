@@ -6,13 +6,13 @@ const {Pedidos} = require('./pedidosModel')
 const {Locales} = require('./localesModel')
 const {Direcciones} = require('./direccionesModel')
 const {Detalle_Pedido} = require('./detalles_pedidosModel')
-const {Categorias} = require('./categoriasModel')
+const {Categorias} = require('./CategoriasModel')
 const {Permisos} = require('./permisosModel')
 const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
 const {LicenciasConducir} = require('./licencia_conducirModel')
-const {RolesUsuario} = require('./RolesUsuarioModel'); 
-const {PermisosUsuarios} = require('./PermisosUsuariosModel');
+const {RolesUsuario} = require('./roles_usuariosModel'); 
+const {PermisosUsuarios} = require('./permisos_usuariosModel');
 
 Usuarios.hasMany(Direcciones, {foreignKey: 'Id_Usuario'});
 Direcciones.belongsTo(Usuarios, {foreignKey: 'Id_Usuario'});
