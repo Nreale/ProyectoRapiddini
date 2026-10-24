@@ -16,7 +16,7 @@ function Cabecera() {
         if (token) {
             setEestadoToken(true);
         } else {
-            setEestadoToken(true);
+            setEestadoToken(false);
         }
     }, [location]);
 
