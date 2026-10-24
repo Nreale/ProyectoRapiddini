@@ -4,7 +4,7 @@ const {autorizacion} = require('../middleware/autorizacion')
 const router = Router();
 
 router.get('/MostrarUsuarios', getMostrarUsuarios);
-router.get('/BuscarUsuario/:id', getBuscarUsuario);
+router.get('/BuscarUsuario', autorizacion, getBuscarUsuario);
 router.post('/IniciarSesion', getIniciarSesion);
 router.post('/Registrarte', postRegistrarUsuario);
 router.delete('/EliminarCuenta',autorizacion, deletedBorrarUsuario);

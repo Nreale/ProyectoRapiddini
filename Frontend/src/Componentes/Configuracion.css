@@ -26,13 +26,72 @@
 .configuracion__header p {
   color: #666;
   font-size: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+
+.configuracion__tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.configuracion__tab-btn {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.configuracion__tab-btn.active {
+  background-color: #c93b2b;
+  color: white;
+}
+
+
+.configuracion__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.configuracion__fields input,
+.configuracion__fields select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.configuracion__fields input:focus,
+.configuracion__fields select:focus {
+  border-color: #c93b2b;
+}
+
+.configuracion__msg--success {
+  color: #2e7d32;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.configuracion__msg--error {
+  color: #c93b2b;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
 .configuracion__buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .configuracion__buttons--decoration {
@@ -57,6 +116,15 @@
 
 .configuracion__button--logout:hover {
   background-color: #b03223;
+}
+
+.configuracion__button--save {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.configuracion__button--save:hover {
+  background-color: #43a047;
 }
 
 .configuracion__button--volver {

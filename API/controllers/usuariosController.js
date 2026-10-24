@@ -17,12 +17,12 @@ const getMostrarUsuarios = async (req, res) =>{
 
 const getBuscarUsuario = async (req, res) => {
     try {
-        if (req.params.id === undefined) {
+        if (req.user.id === undefined) {
             return res.status(400).json({message: "Falta el id"})
         }
         const usuario = await Usuarios.findOne({
             where: {
-                id: Number(req.params.id),
+                id: Number(req.user.id),
                 isActive: true
             }
         })
@@ -131,7 +131,7 @@ const deletedBorrarUsuario = async (req, res) => {
 
 const patchModificarUsuario = async (req, res) => {
     try {
-        const { id } = req.user.id;
+        const id = req.user.id;
         const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero } = req.body;
 
         const usuario = await Usuarios.findOne({
