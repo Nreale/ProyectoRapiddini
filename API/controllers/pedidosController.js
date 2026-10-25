@@ -1,4 +1,4 @@
-const { Pedidos, Detalle_Pedido, Productos, Usuarios, Repartidores, Locales } = require('../models/index.js');
+const { Pedidos, Carritos, Productos, Usuarios, Repartidores, Locales } = require('../models/index.js');
 
 // 1. Obtener todos los pedidos (para admin/auditoría)
 const getPedidos = async (req, res) => {
@@ -66,7 +66,7 @@ const crearPedido = async (req, res) => {
             estado: 'Pendiente',
             total: totalCalculado,
             metado_pago,
-            UsuarioId: usuarioId || req.usuario?.id,
+            UsuarioId: usuarioId || req.user.id,
             LocalId: localId
         });
 

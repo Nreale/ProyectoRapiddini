@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
+const { calcularDVH } = require('../middleware/DVH');
 
 const Categorias = sequelize.define('Categorias', {
     id: {
@@ -14,11 +15,23 @@ const Categorias = sequelize.define('Categorias', {
     descripcion: {
         type: DataTypes.STRING(100),
         allowNull: false,
+    },
+    // Columna para el DVH
+    dvh: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
-    
 }, {
     tableName: 'categorias',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        beforeCreate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        },
+        beforeUpdate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        }
+    }
 });
 
 module.exports = {

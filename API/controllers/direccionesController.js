@@ -2,7 +2,7 @@ const { Direcciones } = require('../models/index.js');
 
 const getDirecciones = async (req, res) => {
   try {
-    const direcciones = await Direccion.findAll();
+    const direcciones = await Direcciones.findAll();
     res.json(direcciones);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener las direcciones', error: error.message });
@@ -11,7 +11,7 @@ const getDirecciones = async (req, res) => {
 
 const getDireccion = async (req, res) => {
   try {
-    const direccion = await Direccion.findByPk(req.params.id);
+    const direccion = await Direcciones.findByPk(req.params.id);
     if (!direccion) {
       return res.status(404).json({ mensaje: 'Dirección no encontrada' });
     }
@@ -41,7 +41,7 @@ const crearDireccion = async (req, res) => {
       return res.status(400).json({ mensaje: 'Timbre es obligatorio y debe tener hasta 2 dígitos' });
     }
 
-    const nuevaDireccion = await Direccion.create({ calle, numero, id_usuario, edificio, timbre });
+    const nuevaDireccion = await Direcciones.create({ calle, numero, id_usuario, edificio, timbre });
     res.status(201).json(nuevaDireccion);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al crear la dirección', error: error.message });
@@ -53,7 +53,7 @@ const actualizarDireccion = async (req, res) => {
     const { id } = req.params;
     const { calle, numero, id_usuario, edificio, timbre } = req.body;
 
-    const direccion = await Direccion.findByPk(id);
+    const direccion = await Direcciones.findByPk(id);
     if (!direccion) {
       return res.status(404).json({ mensaje: 'Dirección no encontrada' });
     }
@@ -69,7 +69,7 @@ const eliminarDireccion = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const direccion = await Direccion.findByPk(id);
+    const direccion = await Direcciones.findByPk(id);
     if (!direccion) {
       return res.status(404).json({ mensaje: 'Dirección no encontrada' });
     }
