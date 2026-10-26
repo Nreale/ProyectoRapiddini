@@ -19,6 +19,9 @@ const Locales = sequelize.define('Locales', {
     estado: {
         type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+    imagen: {
+        type: DataTypes.STRING
     }
     
 }, {

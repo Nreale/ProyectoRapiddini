@@ -29,9 +29,12 @@ function CategoriasSection() {
 
   return (
     <div className="categorias-section">
+      <h2 className="categorias-section__title">Categorias productos</h2>
       <div className="categorias-grid">
         {categorias.map((cat) => (
-          <CategoriaCard key={cat.id} titulo={cat.nombre} />
+          <CategoriaCard key={cat.id} titulo={cat.nombre} 
+          descripcion={cat.descripcion}
+          imagen={cat.imagen}/>
         ))}
       </div>
     </div>
