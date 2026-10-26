@@ -9,7 +9,7 @@ function calcularDVH(datos) {
             cadenaConcatenada += `${key}:${datos[key]}|`;
         }
     }
-
+    
     const hash = crypto.createHash('sha256').update(cadenaConcatenada).digest('hex');
     
     return hash;
