@@ -8,7 +8,13 @@ const Carrusel = ({ titulo, locales = [] }) => {
             <div className="carrusel-grid">
                 {locales.length > 0 ? (
                     locales.map((local) => (
-                        <div key={local.id_local} className="local-card">
+                        <div 
+                            key={local.id} 
+                            className={`local-card ${local.imagen ? 'con-imagen' : ''}`} 
+                            style={local.imagen ? { 
+                                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${local.imagen})` 
+                            } : {}}
+                        >
                             <div className="local-info">
                                 <h3 className="local-nombre">{local.nombre}</h3>
                                 <p className="local-telefono">

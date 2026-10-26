@@ -51,12 +51,13 @@ const obtenerCategoriaPorNombre = async (req, res) => {
 
 const crearCategoria = async (req, res) => {
     try {
-        const { nombre, descripcion } = req.body;
+        const { nombre, descripcion, imagen } = req.body;
 
         if (!nombre || !descripcion) {
             return res.status(400).json({
                 success: false,
-                message: 'El nombre y la descripción son obligatorios'
+                message: 'El nombre y la descripción son obligatorios',
+                imagen
             });
         }
 
@@ -88,7 +89,8 @@ const actualizarCategoriaPorNombre = async (req, res) => {
         if (!nombre) {
             return res.status(400).json({
                 success: false,
-                message: 'El nombre proporcionado no es válido'
+                message: 'El nombre proporcionado no es válido',
+                imagen
             });
         }
 
@@ -107,6 +109,7 @@ const actualizarCategoriaPorNombre = async (req, res) => {
 
         categoria.nombre = nuevoNombre !== undefined ? nuevoNombre : categoria.nombre;
         categoria.descripcion = descripcion !== undefined ? descripcion : categoria.descripcion;
+        categoria.imagen = imagen !== undefined ? imagen : categoria.imagen;
 
         await categoria.save();
 

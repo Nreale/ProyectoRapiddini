@@ -31,7 +31,6 @@
 
 .local-card {
     min-width: 250px;
-    background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px;
@@ -83,4 +82,25 @@
     padding: 40px;
     font-size: 1.1rem;
     color: #777;
+}
+
+.local-card.con-imagen {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.local-card.con-imagen .local-nombre {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.local-card.con-imagen .local-telefono {
+    color: #f0f0f0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.local-card.con-imagen .local-telefono {
+    color: #f1f1f1;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }

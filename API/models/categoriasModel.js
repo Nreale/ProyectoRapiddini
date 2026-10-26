@@ -16,6 +16,9 @@ const Categorias = sequelize.define('Categorias', {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
+    imagen: {
+        type: DataTypes.STRING
+    },
     // Columna para el DVH
     dvh: {
         type: DataTypes.STRING(255),

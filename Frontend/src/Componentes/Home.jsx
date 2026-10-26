@@ -17,7 +17,7 @@ const Home = () => {
         setError(null);
         try {
             const response = await axios.get('http://localhost:3000/Locales/ObtenerLocales')
-            const dataLocales = response.data.locales;
+            const dataLocales = response.data.locales.slice(0, 10);
             
             setLocales(dataLocales);
             

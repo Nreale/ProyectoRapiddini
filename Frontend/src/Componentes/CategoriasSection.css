@@ -1,10 +1,28 @@
 .categorias-section {
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .categorias-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
   gap: 20px;
   width: 100%;
+}
+
+.categorias-section__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.categoria-card.con-imagen {
+  background-size: cover;
+  background-position: center;
+  border: none;
 }
