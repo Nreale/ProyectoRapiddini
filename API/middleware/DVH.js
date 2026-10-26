@@ -10,10 +10,7 @@ function calcularDVH(datos) {
         }
     }
 
-    const hash = crypto
-        .createHash('sha256')
-        .update(cadenaConcatenada)
-        .digest('hex');
+    const hash = crypto.createHash('sha256').update(cadenaConcatenada).digest('hex');
     
     return hash;
 }

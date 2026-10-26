@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
+const { calcularDVH } = require('../middleware/DVH');
 
 const LicenciasConducir = sequelize.define('Licencias_Conducir', {
     id: {
@@ -22,10 +23,23 @@ const LicenciasConducir = sequelize.define('Licencias_Conducir', {
     ID_Repartidor: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    // Columna para el DVH
+    dvh: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
 }, {
-  tableName: 'Licencias_Conducir',
-  timestamps: false
+    tableName: 'Licencias_Conducir',
+    timestamps: false,
+    hooks: {
+        beforeCreate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        },
+        beforeUpdate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        }
+    }
 });
 
 module.exports = {

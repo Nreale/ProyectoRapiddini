@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
+const { calcularDVH } = require('../middleware/DVH');
 
 const PermisosUsuarios = sequelize.define('Permisos_Usuarios', {
     id: {
@@ -7,8 +8,8 @@ const PermisosUsuarios = sequelize.define('Permisos_Usuarios', {
         primaryKey: true,
         autoIncrement: true
     },
-    DVH: {
-        type: DataTypes.STRING,
+    dvh: {
+        type: DataTypes.STRING(255),
         allowNull: true
     },
     Id_Permisos: {
@@ -21,7 +22,15 @@ const PermisosUsuarios = sequelize.define('Permisos_Usuarios', {
     }
 }, {
     tableName: 'Permisos_Usuarios',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        beforeCreate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        },
+        beforeUpdate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        }
+    }
 });
 
 module.exports = {
