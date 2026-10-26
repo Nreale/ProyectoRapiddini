@@ -112,7 +112,7 @@ const deletedBorrarUsuario = async (req, res) => {
             return res.status(400).json({message: "Parametros incompletos"})
         }
         
-        const usuario = await Usuarios.findByPk(Number(req.params.id))
+        const usuario = await Usuarios.findByPk(Number(req.user.id))
 
         if (!usuario) {
             return res.status(404).json({message: "Usuario no encontrado", estado: false})

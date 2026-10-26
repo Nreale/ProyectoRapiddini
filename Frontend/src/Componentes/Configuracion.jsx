@@ -48,6 +48,21 @@ function Configuracion() {
         navigate('/');
     };
 
+    const Borrar = async(e)=>{
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete('http://localhost:3000/Usuario/EliminarCuenta', {
+                headers: {
+                    authorization: token
+                }
+            })
+
+            
+
+        } catch (error) {
+            setError(error.response?.data?.message || "Error al actualizar los datos");
+        }
+    }
     const ModificarUsuario = async (e) => {
         e.preventDefault();//pa que no se refresque solo
         setMensaje(null);
@@ -93,7 +108,7 @@ function Configuracion() {
                 {vistaActiva === 'sesion' && (
                     <div className='configuracion__buttons'>
                         <button onClick={Logout} className='configuracion__button configuracion__button--logout'>Cerrar Sesión</button>
-
+                        <button onClick={Borrar} className='configuracion__button configuracion__button--logout'>Cerrar Sesión</button>
                         <Link className='configuracion__buttons--decoration' to='/'>
                             <button className='configuracion__button configuracion__button--volver'>Volver</button>
                         </Link>

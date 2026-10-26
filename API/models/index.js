@@ -5,8 +5,8 @@ const {Productos} = require('./productosModel')
 const {Pedidos} = require('./pedidosModel')
 const {Locales} = require('./localesModel')
 const {Direcciones} = require('./direccionesModel')
-const {Detalle_Pedido} = require('./detalles_pedidosModel')
-const {Categorias} = require('./CategoriasModel')
+const {Carritos} = require('./carritosModel')
+const {Categorias} = require('./categoriasModel')
 const {Permisos} = require('./permisosModel')
 const {Roles} = require('./rolesModel')
 const {Vendedores} = require('./vendedoresModel')
@@ -32,11 +32,11 @@ Direcciones.hasMany(Pedidos, {foreignKey: 'Id_Direccion'});
 Pedidos.belongsTo(Repartidores, {foreignKey: 'Id_Repartidor'});
 Repartidores.hasMany(Pedidos, {foreignKey: 'Id_Repartidor'});
 
-Detalle_Pedido.belongsTo(Pedidos, { foreignKey: 'Id_Pedido' });
-Pedidos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Pedido' });
+Carritos.belongsTo(Pedidos, { foreignKey: 'Id_Pedido' });
+Pedidos.hasMany(Carritos, { foreignKey: 'Id_Pedido' });
 
-Detalle_Pedido.belongsTo(Productos, { foreignKey: 'Id_Producto' });
-Productos.hasMany(Detalle_Pedido, { foreignKey: 'Id_Producto' });
+Carritos.belongsTo(Productos, { foreignKey: 'Id_Producto' });
+Productos.hasMany(Carritos, { foreignKey: 'Id_Producto' });
 
 Productos.belongsTo(Categorias, {foreignKey: 'Id_Categoria'});
 Categorias.hasMany(Productos, {foreignKey: 'Id_Categoria'});
@@ -70,7 +70,7 @@ module.exports = {
     Pedidos,
     Locales,
     Direcciones,
-    Detalle_Pedido,
+    Carritos,
     Categorias,
     Vendedores,
     Roles,

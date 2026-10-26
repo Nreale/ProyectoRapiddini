@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
+const { calcularDVH } = require('../middleware/DVH');
 
 const Productos = sequelize.define('Productos', {
     id: {
@@ -28,12 +29,23 @@ const Productos = sequelize.define('Productos', {
     Id_Local: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    // Columna para el DVH
+    dvh: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
-
-    
 }, {
     tableName: 'productos',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        beforeCreate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        },
+        beforeUpdate: (instancia) => {
+            instancia.dvh = calcularDVH(instancia);
+        }
+    }
 });
 
 module.exports = {

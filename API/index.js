@@ -12,7 +12,7 @@ const LocalesRoutes = require('./routers/LocalesRoutes.js');
 const CategoriasRoutes = require('./routers/CategoriasRoutes.js');
 
 const {Locales} = require('./models/localesModel.js');
-const {Categorias} = require('./models/CategoriasModel.js');
+const {Categorias} = require('./models/categoriasModel.js');
 
 const server = express();
 server.use(express.json());
@@ -44,7 +44,7 @@ server.listen(3000, async () => {
     try {
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
         await sequelize.authenticate();
-        await sequelize.sync({ alter: true });
+        await sequelize.sync({ force: true });
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;');
         console.log("Conexión exitosa a la Base de Datos");
         

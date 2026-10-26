@@ -17,22 +17,21 @@ function App() {
       </header>
       
       <main>
-          
+        <Routes>
+          <Route element={<Home/>} path='/'></Route>
+          <Route element={<Login/>} path='/Login'></Route>
+          <Route element={<RegisterType/>} path='/RegisterType'></Route>
+          <Route element={<RegisterUser/>} path='/RegisterUser'></Route>
+          <Route element={<RegisterVendedor/>} path='/RegisterVendedor'></Route>
+          <Route element={<RegisterRepartidor/>} path='/RegisterRepartidor'></Route>
+          <Route element={<Configuracion />} path="/Configuracion"></Route>
+        </Routes>
       </main>
 
       <footer>
         
       </footer>
-      <Routes>
-        <Route element={<Home/>} path='/'></Route>
-        <Route element={<Login/>} path='/Login'></Route>
-        <Route element={<RegisterType/>} path='/RegisterType'></Route>
-        <Route element={<RegisterUser/>} path='/RegisterUser'></Route>
-        <Route element={<RegisterVendedor/>} path='/RegisterVendedor'></Route>
-        <Route element={<RegisterRepartidor/>} path='/RegisterRepartidor'></Route>
-        <Route element={<Configuracion />} path="/Configuracion"></Route>
-
-      </Routes>
+      
     </>
   )
 }

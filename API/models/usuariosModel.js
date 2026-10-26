@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes, Model } = require('sequelize');
+const { calcularDVH } = require('../middleware/DVH'); // 1. Importas tu función DVH
 
 const Usuarios = sequelize.define('Usuarios', {
     id: {
@@ -10,12 +11,10 @@ const Usuarios = sequelize.define('Usuarios', {
     nombre: {
         type: DataTypes.STRING(100),
         allowNull: false,
-        
     },
     apellido: {
         type: DataTypes.STRING(100),
         allowNull: false,
-        
     },
     email: {
         type: DataTypes.STRING(100),
@@ -24,7 +23,6 @@ const Usuarios = sequelize.define('Usuarios', {
         validate: {
             isEmail: true
         }
-        
     },
     telefono: {
         type: DataTypes.STRING(100),
@@ -33,7 +31,6 @@ const Usuarios = sequelize.define('Usuarios', {
     contraseña: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        
     },
     fecha_nacimiento: {
         type: DataTypes.DATEONLY,
@@ -51,11 +48,27 @@ const Usuarios = sequelize.define('Usuarios', {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
+    },
+    // 2. Agregamos la columna 'dvh' para guardar el hash en la base de datos
+    dvh: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
     
 }, {
     tableName: 'usuarios',
-    timestamps: true
+    timestamps: true,
+    // 3. Agregamos los hooks para que calcule y guarde el DVH automáticamente
+    hooks: {
+        beforeCreate: (usuario) => {
+            const datos = usuario.toJSON();
+            usuario.dvh = calcularDVH(datos);
+        },
+        beforeUpdate: (usuario) => {
+            const datos = usuario.toJSON();
+            usuario.dvh = calcularDVH(datos);
+        }
+    }
 });
 
 module.exports = {
