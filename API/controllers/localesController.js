@@ -49,7 +49,7 @@ const getLocal = async (req, res) => {
 
 const postAgregarLocal = async (req, res) => {
     try {
-        const { nombre, telefono, estado } = req.body;
+        const { nombre, telefono, estado, imagen } = req.body;
 
         if (!nombre || telefono === undefined || estado === undefined) {
             return res.status(400).json({
@@ -61,7 +61,8 @@ const postAgregarLocal = async (req, res) => {
         const local = await Locales.create({
             nombre,
             telefono,
-            estado
+            estado,
+            imagen
         });
 
         return res.status(201).json({
@@ -91,12 +92,13 @@ const patchModificarLocal = async (req, res) => {
             });
         }
 
-        const { nombre, telefono, estado } = req.body;
+        const { nombre, telefono, estado, imagen } = req.body;
 
         await local.update({
             nombre,
             telefono,
-            estado
+            estado,
+            imagen
         });
 
         return res.status(200).json({
