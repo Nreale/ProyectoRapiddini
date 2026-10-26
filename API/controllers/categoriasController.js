@@ -57,13 +57,13 @@ const crearCategoria = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: 'El nombre y la descripción son obligatorios',
-                imagen
             });
         }
 
         const nuevaCategoria = await Categorias.create({
             nombre,
-            descripcion
+            descripcion,
+            imagen
         });
 
         return res.status(201).json({
@@ -84,13 +84,12 @@ const crearCategoria = async (req, res) => {
 const actualizarCategoriaPorNombre = async (req, res) => {
     try {
         const { nombre } = req.params;
-        const { nuevoNombre, descripcion } = req.body;
+        const { nuevoNombre, descripcion, imagen } = req.body;
 
         if (!nombre) {
             return res.status(400).json({
                 success: false,
                 message: 'El nombre proporcionado no es válido',
-                imagen
             });
         }
 
