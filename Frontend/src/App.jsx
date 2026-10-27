@@ -8,6 +8,7 @@ import RegisterUser from './Componentes/RegisterUser'
 import RegisterVendedor from './Componentes/RegisterVendedor'
 import RegisterRepartidor from './Componentes/RegisterRepartidores'
 import Configuracion from './Componentes/Configuracion';
+import CambiarContraseña from './Componentes/CambiarContraseña'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       
       <main>
         <Routes>
+          <Route element={<CambiarContraseña/>} path='/recuperar-password'></Route>
           <Route element={<Home/>} path='/'></Route>
           <Route element={<Login/>} path='/Login'></Route>
           <Route element={<RegisterType/>} path='/RegisterType'></Route>

@@ -1,4 +1,4 @@
-const { Sucursales } = require('../models/index.js');
+const { Sucursales, Locales } = require('../models/index.js');
 
 // Obtener todas las sucursales
 const getSucursales = async (req, res) => {
@@ -27,8 +27,15 @@ const getSucursalById = async (req, res) => {
 // Crear una sucursal
 const crearSucursal = async (req, res) => {
     try {
-        const { nombre, direccion } = req.body;
-        const nuevaSucursal = await Sucursales.create({ nombre, direccion });
+        const { nombre, direccion, Id_Local } = req.body;
+        if (!nombre || !direccion || !Id_Local) {
+            return res.status(400).json({message: "Parametreos incompletos"})
+        }
+        const local = await Locales.findByPk(Id_Local)
+        if (!local) {
+            return res.status(404).json({message: "Local no encontrado"})
+        }
+        const nuevaSucursal = await Sucursales.create({ nombre, direccion, Id_Local});
         res.status(201).json(nuevaSucursal);
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al crear la sucursal', error: error.message });

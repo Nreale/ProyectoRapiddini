@@ -19,6 +19,11 @@ const PermisosUsuarios = sequelize.define('Permisos_Usuarios', {
     Id_Usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'Permisos_Usuarios',

@@ -26,6 +26,11 @@ const Sucursales = sequelize.define('Sucursales', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'sucursales',

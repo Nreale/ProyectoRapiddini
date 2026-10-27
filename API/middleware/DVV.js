@@ -41,7 +41,7 @@ const actualizarDVV = async (nombreTabla, modeloSequelize) => {
 
 /**
  * Verifica si el DVV actual coincide con la suma de los DVH de la tabla.
- */
+*/
 const verificarDVV = async (nombreTabla, modeloSequelize) => {
     try {
         // 1. Calcular el DVV real actual en base a los datos

@@ -23,7 +23,13 @@ const Categorias = sequelize.define('Categorias', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
+    
 }, {
     tableName: 'categorias',
     timestamps: false,

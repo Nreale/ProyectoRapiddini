@@ -23,6 +23,11 @@ const Carritos = sequelize.define('Carritos', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'carritos',

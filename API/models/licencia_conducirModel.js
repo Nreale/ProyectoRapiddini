@@ -28,6 +28,11 @@ const LicenciasConducir = sequelize.define('Licencias_Conducir', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'Licencias_Conducir',

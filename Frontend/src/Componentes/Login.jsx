@@ -55,6 +55,8 @@ function Login() {
             <div className='login__button--proceed'>
               <button type='submit' disabled={!HabilitedLogin}>Iniciar Sesion</button>
             </div>
+            <br />
+            <Link to='/recuperar-password'>Olvidaste tu contraseña</Link>
           </div>
 
           <div className='login__buttons'>

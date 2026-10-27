@@ -26,7 +26,8 @@ function Cabecera() {
         location.pathname === '/RegisterType' || 
         location.pathname === '/RegisterUser' || 
         location.pathname === '/RegisterVendedor' || 
-        location.pathname === '/RegisterRepartidor'
+        location.pathname === '/RegisterRepartidor' ||
+        location.pathname === '/recuperar-password'
     ) {
         return null;
     }

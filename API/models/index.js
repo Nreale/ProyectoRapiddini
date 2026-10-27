@@ -1,4 +1,4 @@
-const { calcularDVH } = require('./DVH'); // Ajusta la ruta si DVH.js está en otra carpeta (ej: './utils/DVH')
+const { calcularDVH } = require('../middleware/DVH'); // Ajusta la ruta si DVH.js está en otra carpeta (ej: './utils/DVH')
 
 const {Usuarios} = require('./usuariosModel');
 const {Sucursales} = require('./sucursalesModel');
@@ -49,8 +49,8 @@ Locales.hasMany(Productos, {foreignKey: 'Id_Local'});
 Sucursales.belongsTo(Locales, {foreignKey: 'Id_Local'});
 Locales.hasMany(Sucursales, {foreignKey: 'Id_Local'});
 
-Vendedores.belongsToMany(Locales, {through: 'Vendedores_Localidades', foreignKey: 'ID_Vendedor', otherKey: 'ID_Local'});
-Locales.belongsToMany(Vendedores, {through: 'Vendedores_Localidades', foreignKey: 'ID_Local', otherKey: 'ID_Vendedor'});
+Vendedores.hasMany(Locales, { foreignKey: 'Id_Vendedor' });
+Locales.belongsTo(Vendedores, { foreignKey: 'Id_Vendedor' });
 
 Permisos.belongsToMany(Roles, { through: 'Permisos_Roles', foreignKey: 'Id_Permisos', otherKey: 'Id_Rol' });
 Roles.belongsToMany(Permisos, { through: 'Permisos_Roles', foreignKey: 'Id_Rol', otherKey: 'Id_Permisos' });

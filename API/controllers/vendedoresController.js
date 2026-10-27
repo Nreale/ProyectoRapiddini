@@ -1,39 +1,40 @@
-const { Vendedores, Usuarios } = require('../models/index.js');
+const { Vendedores, Usuarios, Roles } = require('../models/index.js');
 const {sequelize} = require('../config/db.js');
 const bcrypt = require('bcrypt');
-const { DATE } = require('sequelize');
+const { Op } = require('sequelize');
 
-
-const postRegistrarVendedor = async (req, res) =>{
+const postRegistrarVendedor = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-        const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social } = req.body;
+        const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero, CUIT, Razon_Social } = req.body
+        
         if (!nombre || !apellido || !email || !telefono || !contraseña || !fecha_nacimiento || !genero || !CUIT || !Razon_Social) {
             await t.rollback();
-            return res.status(400).json({message: "Parametros incompletos"})
+            return res.status(400).json({ message: "Parámetros incompletos" })
         }
 
         const usuario = await Usuarios.findOne({ 
-            where: { email, isActive: true } 
-        });
+            where: { email, isActive: true },
+            transaction: t 
+        })
 
         if (usuario) {
-            await t.rollback();
-            return res.status(409).json({ message: "Este email ya está registrado" });
+            await t.rollback()
+            return res.status(409).json({ message: "Este email ya está registrado" })
         }
 
-        // 2. Validar si el CUIT ya existe en la tabla de Vendedores
         const vendedor = await Vendedores.findOne({ 
-            where: { CUIT } 
+            where: { CUIT },
+            transaction: t 
         });
 
         if (vendedor) {
-            await t.rollback();
-            return res.status(409).json({ message: "Este CUIT ya se encuentra registrado" });
+            await t.rollback()
+            return res.status(409).json({ message: "Este CUIT ya se encuentra registrado" })
         }
 
-        const hashedPassword = await bcrypt.hash(contraseña, 12);
+        const hashedPassword = await bcrypt.hash(contraseña, 12)
         
         const nuevoUsuario = await Usuarios.create({
             nombre,
@@ -44,29 +45,46 @@ const postRegistrarVendedor = async (req, res) =>{
             fecha_nacimiento,
             genero,
             isActive: true
-        }, { transaction: t });
+        }, { transaction: t })
 
-        
         const nuevoVendedor = await Vendedores.create({
             CUIT,
             Razon_Social,
             Id_Usuario: nuevoUsuario.id,
             isActive: true,
-            fecha_registro_comercial: Date.now()
-        }, { transaction: t });
+            fecha_registro_comercial: new Date()
+        }, { transaction: t })
+
+
+        const roles = await Roles.findAll({
+            where: {
+                nombre: {
+                    [Op.in]: ['USUARIO', 'VENDEDOR'] 
+                }
+            },
+            transaction: t
+        });
+
+        
+        if (roles.length === 0) {
+            await t.rollback();
+            return res.status(404).json({ message: "No se encontraron los roles", estado: false })
+        }
+        
+        if (roles.includes('USUARIO') || roles.includes('VENDEDOR')) {
+            await t.rollback();
+            return res.status(404).json({ message: "No se encontraron los roles", estado: false })
+        }
+
+        
+        await nuevoUsuario.addRoles(roles, { transaction: t })
 
         
         await t.commit();
 
-        return res.status(201).json({
-            message: "Usuario y vendedor registrados con éxito",
-            usuario: nuevoUsuario,
-            vendedor: nuevoVendedor
-        });
+        return res.status(201).json({ message: "Vendedor registrados con éxito", usuario: nuevoUsuario, vendedor: nuevoVendedor})
 
     } catch (error) {
-        // Si algo falla en el proceso, revertimos todo lo hecho en la base de datos
-        console.log(error)
         await t.rollback();
         return res.status(500).json({ error: error.message });
     }

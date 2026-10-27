@@ -1,0 +1,136 @@
+.cambiar-pass__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cambiar-pass__card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+}
+
+.cambiar-pass__header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.cambiar-pass__header h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cambiar-pass__header p {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.cambiar-pass__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cambiar-pass__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cambiar-pass__fields input {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid #dcdde1;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.cambiar-pass__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+.cambiar-pass__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    padding: 9px 16px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease,
+                transform 0.3s ease;
+}
+
+.cambiar-pass__button--save,
+.cambiar-pass__button--volver {
+    background-color: #D32F2F;
+    color: #ffffff;
+}
+
+.cambiar-pass__button--save:hover,
+.cambiar-pass__button--volver:hover {
+    background-color: #333333;
+    transform: translateY(-1px);
+}
+
+
+.cambiar-pass__button--save:active,
+.cambiar-pass__button--volver:active {
+    transform: translateY(0);
+}
+
+
+.cambiar-pass__msg--success {
+    font-size: 0.85rem;
+    text-align: center;
+    margin: 0;
+}
+
+/* Mensaje de error */
+.cambiar-pass__msg--error {
+    color: #D32F2F;
+    font-size: 0.85rem;
+    text-align: center;
+    margin: 0;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 480px) {
+    .cambiar-pass__card {
+        width: calc(100% - 32px);
+        padding: 1.5rem;
+    }
+
+    .cambiar-pass__header h2 {
+        font-size: 1.35rem;
+    }
+
+    .cambiar-pass__button {
+        width: 85%;
+    }
+}

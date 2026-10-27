@@ -36,7 +36,7 @@ const postAgregarProducto = async (req, res) => {
         const producto = await Productos.findOne({
             where: {
                 nombre: nombre,
-                id_local: id_local
+                Id_Local: id_local
             }
         })
 

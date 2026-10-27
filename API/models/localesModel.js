@@ -28,6 +28,15 @@ const Locales = sequelize.define('Locales', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
+    Id_Vendedor: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'locales',

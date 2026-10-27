@@ -1,12 +1,13 @@
-const { Pedidos, Carritos, Productos, Usuarios, Repartidores, Locales } = require('../models/index.js');
+const { Pedidos, Carritos, Productos, Usuarios, Repartidores } = require('../models/index.js');
 
-// 1. Obtener todos los pedidos (para admin/auditoría)
+// 1. Obtener todos los pedidos
 const getPedidos = async (req, res) => {
     try {
         const pedidos = await Pedidos.findAll({
             include: [
-                { model: Detalle_Pedido },
-                { model: Usuarios, attributes: ['id', 'nombre', 'email'] }
+                { model: Carritos, include: [Productos] },
+                { model: Usuarios, attributes: ['id', 'nombre', 'email'] },
+                { model: Repartidores, attributes: ['id', 'nombre'] }
             ]
         });
         res.status(200).json(pedidos);
@@ -21,7 +22,7 @@ const getPedidoById = async (req, res) => {
         const { id } = req.params;
         const pedido = await Pedidos.findByPk(id, {
             include: [
-                { model: Detalle_Pedido, include: [Productos] },
+                { model: Carritos, include: [Productos] },
                 { model: Usuarios, attributes: ['id', 'nombre', 'email'] },
                 { model: Repartidores, attributes: ['id', 'nombre'] }
             ]
@@ -37,83 +38,60 @@ const getPedidoById = async (req, res) => {
     }
 };
 
-// 3. Crear un nuevo pedido con sus detalles
+// 3. Crear un nuevo pedido manual
 const crearPedido = async (req, res) => {
     try {
-        const { fecha, metado_pago, productos, usuarioId, localId } = req.body;
+        const { id_usuario, metodo_pago, id_direccion } = req.body;
 
-        // Validar campos obligatorios
-        if (!metado_pago || !productos || productos.length === 0) {
-            return res.status(400).json({ mensaje: 'Faltan campos requeridos o el carrito está vacío' });
-        }
-
-        // Calcular total a partir de los productos enviados
-        let totalCalculado = 0;
-        for (const item of productos) {
-            const productoBD = await Productos.findByPk(item.productoId);
-            if (!productoBD) {
-                return res.status(404).json({ mensaje: `Producto con ID ${item.productoId} no encontrado` });
-            }
-            if (productoBD.stock < item.cantidad) {
-                return res.status(400).json({ mensaje: `Stock insuficiente para ${productoBD.nombre}` });
-            }
-            totalCalculado += productoBD.precio * item.cantidad;
-        }
-
-        // Crear registro en la tabla Pedidos
         const nuevoPedido = await Pedidos.create({
-            fecha: fecha || new Date(),
+            fecha: new Date(),
             estado: 'Pendiente',
-            total: totalCalculado,
-            metado_pago,
-            UsuarioId: usuarioId || req.user.id,
-            LocalId: localId
+            total: 0,
+            metodo_pago: metodo_pago || 'Efectivo',
+            Id_Usuario: id_usuario || req.user.id,
+            Id_Direccion: id_direccion || null,
+            Id_Repartidor: null
         });
-
-        // Crear los registros en Detalle_Pedido y descontar stock
-        for (const item of productos) {
-            await Detalle_Pedido.create({
-                cantidad: item.cantidad,
-                PedidoId: nuevoPedido.id,
-                ProductoId: item.productoId
-            });
-
-            // Descontar del stock
-            const productoBD = await Productos.findByPk(item.productoId);
-            await productoBD.update({ stock: productoBD.stock - item.cantidad });
-        }
 
         res.status(201).json({
             mensaje: 'Pedido creado exitosamente',
             pedido: nuevoPedido
         });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al crear el pedido', error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 
-// 4. Actualizar el estado del pedido (ej. 'En preparación', 'Despachado', 'Entregado', 'Cancelado')
+// 4. Actualizar estado, pago, total o dirección del pedido
 const cambiarEstadoPedido = async (req, res) => {
     try {
         const { id } = req.params;
-        const { estado } = req.body;
+        const { estado, metodo_pago, total, id_direccion, id_repartidor } = req.body;
 
         const pedido = await Pedidos.findByPk(id);
         if (!pedido) {
             return res.status(404).json({ mensaje: 'Pedido no encontrado' });
         }
 
-        await pedido.update({ estado });
-        res.status(200).json({ mensaje: 'Estado del pedido actualizado', pedido });
+        const datosActualizar = {};
+        if (estado !== undefined) datosActualizar.estado = estado;
+        if (metodo_pago !== undefined) datosActualizar.metodo_pago = metodo_pago;
+        if (total !== undefined) datosActualizar.total = total;
+        if (id_direccion !== undefined) datosActualizar.Id_Direccion = id_direccion;
+        if (id_repartidor !== undefined) datosActualizar.Id_Repartidor = id_repartidor;
+
+        await pedido.update(datosActualizar);
+
+        res.status(200).json({ mensaje: 'Pedido actualizado correctamente', pedido });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al actualizar el estado', error: error.message });
+        res.status(500).json({ mensaje: 'Error al actualizar el pedido', error: error.message });
     }
 };
 
-// 5. Asignar o aceptar repartidor en un pedido
+// 5. Asignar repartidor
 const asignarRepartidor = async (req, res) => {
     try {
-        const { id } = req.params; // ID del pedido
+        const { id } = req.params;
         const { repartidorId } = req.body;
 
         const pedido = await Pedidos.findByPk(id);
@@ -122,7 +100,7 @@ const asignarRepartidor = async (req, res) => {
         }
 
         await pedido.update({
-            RepartidorId: repartidorId,
+            Id_Repartidor: repartidorId,
             estado: 'En camino'
         });
 
@@ -132,7 +110,7 @@ const asignarRepartidor = async (req, res) => {
     }
 };
 
-// 6. Eliminar / Cancelar pedido
+// 6. Eliminar pedido
 const eliminarPedido = async (req, res) => {
     try {
         const { id } = req.params;

@@ -20,10 +20,6 @@ const Vendedores = sequelize.define('Vendedores', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    isActive: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
     Id_Usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -32,6 +28,11 @@ const Vendedores = sequelize.define('Vendedores', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'vendedores',

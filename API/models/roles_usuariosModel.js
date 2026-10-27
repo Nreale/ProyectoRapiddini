@@ -19,6 +19,11 @@ const RolesUsuario = sequelize.define('Roles_Usuario', {
     Id_Usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'Roles_Usuario',

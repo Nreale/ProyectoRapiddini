@@ -24,7 +24,7 @@ const Pedidos = sequelize.define('Pedidos', {
         defaultValue: 0
         
     },
-    metado_pago: {
+    metodo_pago: {
         type: DataTypes.ENUM('Efectivo', 'Tarjeta Credito', 'Tarjeta Debito', 'Billetera Virutal'),
         allowNull: false,
     },
@@ -34,7 +34,7 @@ const Pedidos = sequelize.define('Pedidos', {
     },
     Id_Direccion: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true //lo dejo en nulo para arreglarlo dsp (el usuario va a empezar con el pedido nulo y despues cuando lo pague va a elegir la direccion, es la idea)
     },
     Id_Repartidor: {
         type: DataTypes.INTEGER,
@@ -44,6 +44,11 @@ const Pedidos = sequelize.define('Pedidos', {
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'pedidos',

@@ -41,7 +41,7 @@ server.listen(3000, async () => {
     try {
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
         await sequelize.authenticate();
-        await sequelize.sync({ force: true });
+        await sequelize.sync({});
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;');
         console.log("Conexión exitosa a la Base de Datos");
         

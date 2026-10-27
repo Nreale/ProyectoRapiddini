@@ -56,9 +56,10 @@ function Configuracion() {
                     authorization: token
                 }
             })
-
             
-
+            
+            localStorage.removeItem('token');
+            navigate('/RegisterType');
         } catch (error) {
             setError(error.response?.data?.message || "Error al actualizar los datos");
         }
@@ -108,7 +109,7 @@ function Configuracion() {
                 {vistaActiva === 'sesion' && (
                     <div className='configuracion__buttons'>
                         <button onClick={Logout} className='configuracion__button configuracion__button--logout'>Cerrar Sesión</button>
-                        <button onClick={Borrar} className='configuracion__button configuracion__button--logout'>Cerrar Sesión</button>
+                        <button onClick={Borrar} className='configuracion__button configuracion__button--logout'>Borrar</button>
                         <Link className='configuracion__buttons--decoration' to='/'>
                             <button className='configuracion__button configuracion__button--volver'>Volver</button>
                         </Link>
@@ -122,7 +123,7 @@ function Configuracion() {
                         <input type="text" placeholder={nombre || 'Nombre'} onChange={(e) => setNombre(e.target.value)} />
                         <input type="text" placeholder={apellido || 'Apellido'} onChange={(e) => setApellido(e.target.value)} />
                         <input type="email" placeholder={email || 'Email'} onChange={(e) => setEmail(e.target.value)} />
-                
+                        
                         <select value={genero} onChange={(e) => setGenero(e.target.value)}>
                             <option value="">{genero || 'Selecciona género'}</option>
                             <option value="Masculino">Masculino</option>

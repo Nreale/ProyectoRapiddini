@@ -42,7 +42,8 @@ const Usuarios = sequelize.define('Usuarios', {
     },
     isActive: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: true
     },
     fecha_registro: {
         type: DataTypes.DATE,

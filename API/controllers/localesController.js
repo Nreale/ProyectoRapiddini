@@ -49,9 +49,9 @@ const getLocal = async (req, res) => {
 
 const postAgregarLocal = async (req, res) => {
     try {
-        const { nombre, telefono, estado, imagen } = req.body;
+        const { nombre, telefono, estado, imagen, Id_Vendedor } = req.body;
 
-        if (!nombre || telefono === undefined || estado === undefined) {
+        if (!nombre || telefono === undefined || estado === undefined || !Id_Vendedor) {
             return res.status(400).json({
                 success: false,
                 message: "Faltan parámetros obligatorios"
@@ -62,7 +62,8 @@ const postAgregarLocal = async (req, res) => {
             nombre,
             telefono,
             estado,
-            imagen
+            imagen,
+            Id_Vendedor
         });
 
         return res.status(201).json({
