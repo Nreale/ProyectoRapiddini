@@ -216,15 +216,46 @@ const deletedBorrarUsuario = async (req, res) => {
         
     } catch (error) {
         await t.rollback();
-        console.log(error)
         return res.status(500).json({error: error.message})
     }
     
 }
 
+const patchRecuperarContraseña = async (req, res) => {
+    try {
+        console.log("entro")
+        const {email, contraseña} = req.body
+
+        if (!email || !contraseña) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+        const usuario = await Usuarios.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        const isMatch = await bcrypt.compare(contraseña, usuario.contraseña);
+        if (isMatch) {
+            return res.status(401).json({ message: 'No puede usar la contraseña que ya tenes' });
+        }
+
+        usuario.contraseña = await bcrypt.hash(contraseña, 12);
+        await usuario.save()
+        return res.status(200).json({message: "Contraseña cambiada con exito", estado: true})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: error.message})
+    }
+    
+}
 const patchModificarUsuario = async (req, res) => {
     try {
-        const id = req.user.id;
+        const id = req.user.id
         const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero } = req.body;
 
         const usuario = await Usuarios.findOne({
@@ -234,6 +265,7 @@ const patchModificarUsuario = async (req, res) => {
             }
         });
 
+        
         if (!usuario) {
             return res.status(404).json({ message: "Usuario no encontrado", estado: false });
         }
@@ -255,17 +287,22 @@ const patchModificarUsuario = async (req, res) => {
         }
 
         if (contraseña) {
+            const isMatch = await bcrypt.compare(contraseña, usuario.contraseña)
+
+            if (isMatch) {
+                return res.status(400).json({message: 'No podés usar la contraseña actual nuevamente',estado: false});
+            }
+
             datosActualizar.contraseña = await bcrypt.hash(contraseña, 12);
         }
 
         await usuario.update(datosActualizar);
-
         return res.status(200).json({message: "Modificado correctamente",estado: true});
 
     } catch (error) {
         return res.status(500).json({ error: error.message, estado: false });
     }
-};
+}
 
 const getIniciarSesion = async (req, res) => {
     try {
@@ -273,14 +310,14 @@ const getIniciarSesion = async (req, res) => {
         
         const { email, password } = req.body;
         const user = await Usuarios.findOne({where: {email: email}})
-        if (!user) {
-            return res.status(400).json({ message: 'Credenciales incorrectas' });
+        if (!user || !user.isActive) {
+            return res.status(401).json({ message: 'No encontrado' });
         }
         
 
         const isMatch = await bcrypt.compare(password, user.contraseña);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Credenciales incorrectas' });
+            return res.status(401).json({ message: 'Credenciales incorrectas' });
         }
 
         //const roles = await user.getRoles()
@@ -301,4 +338,5 @@ module.exports = {
     postRegistrarUsuario,
     getBuscarUsuario,
     getIniciarSesion,
+    patchRecuperarContraseña
 };

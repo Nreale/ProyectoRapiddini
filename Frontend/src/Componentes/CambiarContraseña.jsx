@@ -7,8 +7,8 @@ function CambiarContraseña() {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
-    const [nuevaPassword, setNuevaPassword] = useState('');
-    const [confirmarPassword, setConfirmarPassword] = useState('');
+    const [contraseña, setNuevacontraseña] = useState('');
+    const [confirmarcontraseña, setConfirmarcontraseña] = useState('');
     const [mensaje, setMensaje] = useState(null);
     const [error, setError] = useState(null);
 
@@ -17,17 +17,18 @@ function CambiarContraseña() {
         setMensaje(null);
         setError(null);
 
-        if (nuevaPassword !== confirmarPassword) {
+        if (contraseña !== confirmarcontraseña) {
             return setError("Las contraseñas no coinciden");
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/Usuario/ModificarCuenta', {
-                contraseña
+            const response = await axios.patch('http://localhost:3000/Usuario/RecuperarPassword', {
+                contraseña,
+                email
             })
 
             if (response.data.estado) {
-                setMensaje("Contraseña restablecida con éxito! Redirigiendo al login");
+                setMensaje("Contraseña restablecida con éxito redirigiendo al login");
                 setTimeout(() => {
                     navigate('/Login')
                 }, 3000)
@@ -49,8 +50,8 @@ function CambiarContraseña() {
                 <form onSubmit={RecuperarContraseña} className="cambiar-pass__form">
                     <div className="cambiar-pass__fields">
                         <input type="email" placeholder="Correo electrónico" value={email}onChange={(e) => setEmail(e.target.value)}required />
-                        <input type="password" placeholder="Nueva contraseña" value={nuevaPassword}onChange={(e) => setNuevaPassword(e.target.value)}required />
-                        <input type="password" placeholder="Confirmar nueva contraseña" value={confirmarPassword}onChange={(e) => setConfirmarPassword(e.target.value)}required />
+                        <input type="password" placeholder="Nueva contraseña" value={contraseña}onChange={(e) => setNuevacontraseña(e.target.value)}required />
+                        <input type="password" placeholder="Confirmar nueva contraseña" value={confirmarcontraseña}onChange={(e) => setConfirmarcontraseña(e.target.value)}required />
                     </div>
 
                     {mensaje && <p className="cambiar-pass__msg--success">{mensaje}</p>}

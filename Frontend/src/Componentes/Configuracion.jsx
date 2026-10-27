@@ -13,6 +13,7 @@ function Configuracion() {
     const [telefono, setTelefono] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
     const [genero, setGenero] = useState('');
+    const [contraseña, setContraseña] = useState('');
     const [mensaje, setMensaje] = useState(null);
     const [error, setError] = useState(null);
 
@@ -77,7 +78,8 @@ function Configuracion() {
                 email,
                 telefono,
                 fecha_nacimiento: fechaNacimiento,
-                genero
+                genero,
+                contraseña
             }, {
                 headers: { 
                     authorization: token 
@@ -123,6 +125,7 @@ function Configuracion() {
                         <input type="text" placeholder={nombre || 'Nombre'} onChange={(e) => setNombre(e.target.value)} />
                         <input type="text" placeholder={apellido || 'Apellido'} onChange={(e) => setApellido(e.target.value)} />
                         <input type="email" placeholder={email || 'Email'} onChange={(e) => setEmail(e.target.value)} />
+                        <input type="password" placeholder={contraseña || 'Contraseña'} onChange={(e) => setContraseña(e.target.value)} />
                         
                         <select value={genero} onChange={(e) => setGenero(e.target.value)}>
                             <option value="">{genero || 'Selecciona género'}</option>
