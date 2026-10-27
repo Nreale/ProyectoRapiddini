@@ -26,3 +26,10 @@
   background-position: center;
   border: none;
 }
+
+.categorias-vacio {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #777;
+}

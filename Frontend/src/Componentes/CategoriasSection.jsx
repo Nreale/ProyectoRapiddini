@@ -12,8 +12,9 @@ function CategoriasSection() {
     setError(null);
     try {
       const response = await axios.get('http://localhost:3000/Categorias/ObtenerCategorias')
-      setCategorias(response.data.categorias)
-      console.log(response.data.categorias)
+      const categoriasLimitadas = response.data.categorias.slice(0, 8);
+      setCategorias(categoriasLimitadas);
+      console.log(categoriasLimitadas);
     } catch (error) {
       console.error("Error en la petición:", error);
       if (error.response && error.response.data) {
@@ -31,11 +32,17 @@ function CategoriasSection() {
     <div className="categorias-section">
       <h2 className="categorias-section__title">Categorias productos</h2>
       <div className="categorias-grid">
-        {categorias.map((cat) => (
-          <CategoriaCard key={cat.id} titulo={cat.nombre} 
-          descripcion={cat.descripcion}
-          imagen={cat.imagen}/>
-        ))}
+        {categorias.length > 0 ? (
+          categorias.map((cat) => (
+            <CategoriaCard 
+            key={cat.id} 
+            titulo={cat.nombre} 
+            descripcion={cat.descripcion}
+            imagen={cat.imagen}/>
+        ))
+      ) : (
+        <p className="categorias-vacio">No hay categorías para mostrar.</p>
+      )}
       </div>
     </div>
   );
