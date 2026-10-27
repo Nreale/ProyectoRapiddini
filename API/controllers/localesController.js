@@ -5,13 +5,11 @@ const getLocales = async (req, res) => {
         const locales = await Locales.findAll();
 
         return res.status(200).json({
-            success: true,
             locales
         });
 
     } catch (error) {
         return res.status(500).json({
-            success: false,
             message: 'Error interno del servidor al obtener los locales',
             errorDetails: error.message
         });
@@ -28,19 +26,16 @@ const getLocal = async (req, res) => {
 
         if (!local) {
             return res.status(404).json({
-                success: false,
                 message: "Local no encontrado"
             });
         }
 
         return res.status(200).json({
-            success: true,
             data: local
         });
 
     } catch (error) {
         return res.status(500).json({
-            success: false,
             message: 'Error interno del servidor al obtener el local',
             errorDetails: error.message
         });
@@ -53,7 +48,6 @@ const postAgregarLocal = async (req, res) => {
 
         if (!nombre || telefono === undefined || estado === undefined || !Id_Vendedor) {
             return res.status(400).json({
-                success: false,
                 message: "Faltan parámetros obligatorios"
             });
         }
@@ -67,14 +61,12 @@ const postAgregarLocal = async (req, res) => {
         });
 
         return res.status(201).json({
-            success: true,
             message: "Local agregado correctamente",
             data: local
         });
 
     } catch (error) {
-        return res.status(500).json({
-            success: false,
+        return res.status(500).json({ 
             message: 'Error interno del servidor al crear el local',
             errorDetails: error.message
         });
@@ -88,7 +80,6 @@ const patchModificarLocal = async (req, res) => {
 
         if (!local) {
             return res.status(404).json({
-                success: false,
                 message: "Local no encontrado"
             });
         }
@@ -103,14 +94,12 @@ const patchModificarLocal = async (req, res) => {
         });
 
         return res.status(200).json({
-            success: true,
             message: "Local modificado correctamente",
             data: local
         });
 
     } catch (error) {
         return res.status(500).json({
-            success: false,
             message: 'Error interno del servidor al modificar el local',
             errorDetails: error.message
         });
@@ -124,7 +113,6 @@ const deleteBorrarLocal = async (req, res) => {
 
         if (!local) {
             return res.status(404).json({
-                success: false,
                 message: "Local no encontrado"
             });
         }
@@ -132,13 +120,11 @@ const deleteBorrarLocal = async (req, res) => {
         await local.destroy();
 
         return res.status(200).json({
-            success: true,
             message: "Local borrado correctamente"
         });
 
     } catch (error) {
         return res.status(500).json({
-            success: false,
             message: 'Error interno del servidor al borrar el local',
             errorDetails: error.message
         });
