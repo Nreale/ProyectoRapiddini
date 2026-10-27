@@ -1,16 +1,18 @@
-const {Usuarios} = require('./usuariosModel')
-const {Sucursales} = require('./sucursalesModel')
-const {Repartidores} = require('./repartidoresModel')
-const {Productos} = require('./productosModel')
-const {Pedidos} = require('./pedidosModel')
-const {Locales} = require('./localesModel')
-const {Direcciones} = require('./direccionesModel')
-const {Carritos} = require('./carritosModel')
-const {Categorias} = require('./categoriasModel')
-const {Permisos} = require('./permisosModel')
-const {Roles} = require('./rolesModel')
-const {Vendedores} = require('./vendedoresModel')
-const {LicenciasConducir} = require('./licencia_conducirModel')
+const { calcularDVH } = require('./DVH'); // Ajusta la ruta si DVH.js está en otra carpeta (ej: './utils/DVH')
+
+const {Usuarios} = require('./usuariosModel');
+const {Sucursales} = require('./sucursalesModel');
+const {Repartidores} = require('./repartidoresModel');
+const {Productos} = require('./productosModel');
+const {Pedidos} = require('./pedidosModel');
+const {Locales} = require('./localesModel');
+const {Direcciones} = require('./direccionesModel');
+const {Carritos} = require('./carritosModel');
+const {Categorias} = require('./categoriasModel');
+const {Permisos} = require('./permisosModel');
+const {Roles} = require('./rolesModel');
+const {Vendedores} = require('./vendedoresModel');
+const {LicenciasConducir} = require('./licencia_conducirModel');
 const {RolesUsuario} = require('./roles_usuariosModel');
 
 
@@ -62,7 +64,11 @@ Usuarios.belongsToMany(Permisos, { through: 'PermisosUsuarios', foreignKey: 'Id_
 Repartidores.hasMany(LicenciasConducir, { foreignKey: 'ID_Repartidor' });
 LicenciasConducir.belongsTo(Repartidores, { foreignKey: 'ID_Repartidor' });
 
-module.exports = {
+
+// ==========================================
+// AUTOMATIZACIÓN DE HOOKS PARA EL DVH
+// ==========================================
+const todosLosModelos = {
     Usuarios,
     Sucursales,
     Repartidores,
@@ -77,5 +83,19 @@ module.exports = {
     Permisos,
     LicenciasConducir,
     RolesUsuario
-
 };
+
+Object.values(todosLosModelos).forEach((model) => {
+    // Si el modelo tiene definida la columna 'dvh', le inyectamos los ganchos automáticamente
+    if (model && model.rawAttributes && model.rawAttributes.dvh) {
+        model.addHook('beforeCreate', (instance) => {
+            instance.dvh = calcularDVH(instance.dataValues);
+        });
+        model.addHook('beforeUpdate', (instance) => {
+            instance.dvh = calcularDVH(instance.dataValues);
+        });
+    }
+});
+
+
+module.exports = todosLosModelos;
