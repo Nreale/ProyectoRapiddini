@@ -50,7 +50,14 @@ const Usuarios = sequelize.define('Usuarios', {
         allowNull: false,
         defaultValue: DataTypes.NOW
     },
-    // 2. Agregamos la columna 'dvh' para guardar el hash en la base de datos
+    codigo_recuperacion: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    expiracion_codigo: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
     dvh: {
         type: DataTypes.STRING(255),
         allowNull: true

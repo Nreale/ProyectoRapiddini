@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {patchModificarUsuario, deletedBorrarUsuario, postRegistrarUsuario, getBuscarUsuario, getIniciarSesion, postAsignarRol, getMostrarUsuarios, deletedBorrarRol, patchRecuperarContraseña} = require('../controllers/usuariosController');
+const {patchModificarUsuario, deletedBorrarUsuario, postRegistrarUsuario, getBuscarUsuario, getIniciarSesion, getMostrarUsuarios, SolicitarCodigo, patchValidarCodigo, CambiarContraseña} = require('../controllers/usuariosController');
 const {autorizacion} = require('../middleware/autorizacion')
 const router = Router();
 
@@ -9,6 +9,8 @@ router.post('/IniciarSesion', getIniciarSesion);
 router.post('/Registrarte', postRegistrarUsuario);
 router.delete('/EliminarCuenta',autorizacion, deletedBorrarUsuario);
 router.patch('/ModificarCuenta', autorizacion, patchModificarUsuario);
-router.patch('/RecuperarPassword', patchRecuperarContraseña);
+router.post('/SolicitarCodigo', SolicitarCodigo);
+router.patch('/ValidarCodigo', patchValidarCodigo)
+router.patch('/Cambiar', CambiarContraseña)
 
 module.exports = router;

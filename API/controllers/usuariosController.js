@@ -1,4 +1,5 @@
 const { Usuarios, RolesUsuario, Roles, Vendedores, Repartidores, Sucursales, Productos, Pedidos, Locales} = require('../models/index.js');
+const {enviarCorreoRecuperacion} = require('../services/email.js')
 const {sequelize} = require('../config/db.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -221,14 +222,14 @@ const deletedBorrarUsuario = async (req, res) => {
     
 }
 
-const patchRecuperarContraseña = async (req, res) => {
+const SolicitarCodigo = async (req, res) => {
     try {
-        console.log("entro")
-        const {email, contraseña} = req.body
+        const {email} = req.body
 
-        if (!email || !contraseña) {
-            return res.status(400).json({message: "Parametros incompletos"})
+        if (!email) {
+            return res.status(400).json({message: "Parametros icompletos"})
         }
+
         const usuario = await Usuarios.findOne({
             where: {
                 email
@@ -239,20 +240,98 @@ const patchRecuperarContraseña = async (req, res) => {
             return res.status(404).json({message: "Usuario no encontrado"})
         }
 
-        const isMatch = await bcrypt.compare(contraseña, usuario.contraseña);
-        if (isMatch) {
-            return res.status(401).json({ message: 'No puede usar la contraseña que ya tenes' });
+        const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiracion = new Date(Date.now() + 15 * 60 * 1000);
+
+        usuario.codigo_recuperacion = codigo;
+        usuario.expiracion_codigo = expiracion;
+
+        await usuario.save()
+
+        const enviado = await enviarCorreoRecuperacion(email, codigo)
+        if (!enviado) {
+            return res.status(400).json({message: "Error al enviar el correo"})
         }
 
-        usuario.contraseña = await bcrypt.hash(contraseña, 12);
+        return res.status(200).json({message: "Correo enviado. Tiene 15 minutos para enviar el codigo o habra expirado", estado: true})
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+}
+
+const patchValidarCodigo = async (req, res) => {
+    try {
+        const {email, codigo_recuperacion} = req.body
+
+        if (!codigo_recuperacion || !email) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+
+        const usuario = await Usuarios.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        if (usuario.codigo_recuperacion !== codigo_recuperacion) {
+            return res.status(401).json({message: "Codigo no valido"})
+        }
+        if (new Date(usuario.expiracion_codigo).getTime() < Date.now()) {
+            return res.status(401).json({message: "El codigo ha vencido"})
+        }
+
+        usuario.codigo_recuperacion = null
+        usuario.expiracion_codigo = null
+        
+        
         await usuario.save()
-        return res.status(200).json({message: "Contraseña cambiada con exito", estado: true})
+        return res.status(200).json({message: "Codigo permitido", estado: true})
     } catch (error) {
         console.log(error)
         return res.status(500).json({error: error.message})
     }
     
 }
+
+const CambiarContraseña = async (req, res) => {
+    try {
+        const {contraseña, email} = req.body
+
+        if (!contraseña || !email) {
+            return res.status(400).json({message: "Parametros incompletos"})
+        }
+
+        const usuario = await Usuarios.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!usuario) {
+            return res.status(404).json({message: "Usuario no encontrado"})
+        }
+
+        const isMatch = await bcrypt.compare(contraseña, usuario.contraseña)
+
+        if (isMatch) {
+            return res.status(400).json({message: 'No podés usar la contraseña actual nuevamente',estado: false});
+        }
+
+        usuario.contraseña = await bcrypt.hash(contraseña, 12);
+
+        await usuario.save()
+
+        return res.status(200).json({message: "Contraseña cambiada con exito", estado: true})
+    } catch (error) {
+        console.error("DETALLE DEL ERROR EN BACKEND:", error);
+        return res.status(500).json({ error: error.message, estado: false });
+    }
+}
+
 const patchModificarUsuario = async (req, res) => {
     try {
         const id = req.user.id
@@ -320,7 +399,6 @@ const getIniciarSesion = async (req, res) => {
             return res.status(401).json({ message: 'Credenciales incorrectas' });
         }
 
-        //const roles = await user.getRoles()
         const payload = { email: user.email, id: user.id};
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
         res.status(200).json({ message: 'Login correcto', token });
@@ -338,5 +416,7 @@ module.exports = {
     postRegistrarUsuario,
     getBuscarUsuario,
     getIniciarSesion,
-    patchRecuperarContraseña
+    SolicitarCodigo,
+    patchValidarCodigo,
+    CambiarContraseña
 };
