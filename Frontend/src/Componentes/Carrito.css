@@ -1,0 +1,81 @@
+/* Contenedor general de la vista */
+.carrito-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* --- ESTILOS CUANDO EL CARRITO ESTÁ VACÍO --- */
+.carrito-vacio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; /* Centra verticalmente debajo de la barra de navegación */
+    padding: 20px;
+}
+
+.carrito-vacio-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carrito-vacio-texto h2 {
+    color: #333333;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.carrito-vacio-texto p {
+    color: #666666;
+    font-size: 0.95rem;
+}
+
+/* Botones */
+.btn-volver, .btn-finalizar {
+    background-color: #2e7d32; /* Tono verde armónico con tu botón de buscar */
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-volver:hover, .btn-finalizar:hover {
+    background-color: #1b5e20;
+}
+
+.login__buttons--decoration {
+    text-decoration: none;
+}
+
+/* Tarjetas de productos (para cuando sí tenga elementos) */
+.carrito-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.tarjeta-item {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

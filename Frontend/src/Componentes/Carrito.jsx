@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import './Carrito.css'
 import axios from "axios"
-import {Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Carrito() {
     const [carrito, setCarrito] = useState(null)
+
     useEffect(()=>{
         const obtenerCarrito = async () => {
             try {
@@ -23,25 +24,25 @@ function Carrito() {
 
     if (!carrito || !carrito.Carritos || carrito.Carritos.length === 0) {
         return (
-            <div>
-                <div>
-                    <h2>Tu carrito se encuentra vacio</h2>
-                    <p>puedes agregar productos desde el menu principal</p>
-                </div>
-                <div>
-                    <Link className='login__buttons--decoration' to='/'> 
-                        <button>Volver</button>
-                    </Link>
+            <div className="carrito-vacio-container">
+                <div className="carrito-vacio-card">
+                    <div className="carrito-vacio-texto">
+                        <h2>Tu carrito se encuentra vacío</h2>
+                        <p>Puedes agregar productos desde el menú principal</p>
+                    </div>
+                    <div className="carrito-vacio-accion">
+                        <Link className='login__buttons--decoration' to='/'> 
+                            <button className="btn-volver">Volver al menú</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
-            
         );
     }
     
     return (
         <div className="carrito-container">
             <h2>Mi Carrito</h2>
-            {/* Recorremos la tabla intermedia para pintar las tarjetas */}
             <div className="carrito-items">
                 {carrito.Carritos.map((item) => (
                     <div key={item.id} className="tarjeta-item">
@@ -52,8 +53,9 @@ function Carrito() {
                 ))}
             </div>
             <h3>Total: ${carrito.total}</h3>
-            <button>Finalizar Compra</button>
+            <button className="btn-finalizar">Finalizar Compra</button>
         </div>
     );
 };
+
 export default Carrito;
