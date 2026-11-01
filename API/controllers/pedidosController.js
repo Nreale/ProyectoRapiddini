@@ -38,6 +38,35 @@ const getPedidoById = async (req, res) => {
     }
 };
 
+const getCarritoActivo = async (req, res) => {
+    try {
+        const id_usuario = req.user.id;
+
+        // 1. Busca el pedido pendiente del usuario
+        const pedidoActivo = await Pedidos.findOne({
+            where: {
+                Id_Usuario: id_usuario,
+                estado: 'Pendiente'
+            },
+            include: [
+                { 
+                    model: Carritos, // La tabla intermedia
+                    include: [Productos] // ¡Y de yapa trae los datos de los productos!
+                }
+            ]
+        });
+
+        if (!pedidoActivo) {
+            return res.status(404).json({ mensaje: 'No hay carrito activo' });
+        }
+
+        return res.status(200).json(pedidoActivo);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 // 3. Crear un nuevo pedido manual
 const crearPedido = async (req, res) => {
     try {
@@ -133,5 +162,6 @@ module.exports = {
     crearPedido,
     cambiarEstadoPedido,
     asignarRepartidor,
-    eliminarPedido
+    eliminarPedido,
+    getCarritoActivo
 };

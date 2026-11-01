@@ -9,6 +9,7 @@ import RegisterVendedor from './Componentes/RegisterVendedor'
 import RegisterRepartidor from './Componentes/RegisterRepartidores'
 import Configuracion from './Componentes/Configuracion';
 import CambiarContraseña from './Componentes/CambiarContraseña'
+import Carrito from './Componentes/Carrito'
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
           <Route element={<RegisterVendedor/>} path='/RegisterVendedor'></Route>
           <Route element={<RegisterRepartidor/>} path='/RegisterRepartidor'></Route>
           <Route element={<Configuracion />} path="/Configuracion"></Route>
+          <Route element={<Carrito />} path="/Carrito"></Route>
         </Routes>
       </main>
 
