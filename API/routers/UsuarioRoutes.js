@@ -3,7 +3,7 @@ const {patchModificarUsuario, deletedBorrarUsuario, postRegistrarUsuario, getBus
 const {autorizacion} = require('../middleware/autorizacion')
 const router = Router();
 
-router.get('/MostrarUsuarios', getMostrarUsuarios);
+router.get('/MostrarUsuarios',autorizacion, getMostrarUsuarios);
 router.get('/BuscarUsuario', autorizacion, getBuscarUsuario);
 router.post('/IniciarSesion', getIniciarSesion);
 router.post('/Registrarte', postRegistrarUsuario);

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const {sequelize} = require('./config/db.js');
 const ProductoRoutes = require('./routers/ProductosRoutes.js');
@@ -10,6 +11,7 @@ const VendedorRoutes = require('./routers/VendedoresRoutes.js');
 const RepartidorRoutes = require('./routers/RepartidoresRoutes.js');
 const LocalesRoutes = require('./routers/LocalesRoutes.js');
 const CategoriasRoutes = require('./routers/CategoriasRoutes.js');
+
 
 const server = express();
 server.use(express.json());
@@ -37,7 +39,7 @@ server.use('/Repartidores', RepartidorRoutes);
 server.use('/Locales', LocalesRoutes);
 server.use('/Categorias', CategoriasRoutes);
 
-server.listen(3000, async () => {
+server.listen(process.env.PORT, async () => {
     try {
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
         await sequelize.authenticate();

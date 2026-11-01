@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
   background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
   min-height: 100vh;
 }

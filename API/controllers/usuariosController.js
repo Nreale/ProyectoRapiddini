@@ -25,15 +25,18 @@ const getBuscarUsuario = async (req, res) => {
         const usuario = await Usuarios.findOne({
             where: {
                 id: Number(req.user.id),
-                isActive: true
-            }
+                isActive: true,
+                
+            },
+            include: [{model: Roles}]
         })
         if (!usuario) {
             return res.status(404).json("Usuario no encontrado")
         }
-
         res.status(200).json({message: "Usuario encontrado", usuario: usuario})
     } catch (error) {
+        console.log(error);
+        
         return res.status(500).json({error: error.message})
     }
     
@@ -388,7 +391,12 @@ const getIniciarSesion = async (req, res) => {
         const JWT_SECRET = "gbyawdywiadbwa1"
         
         const { email, password } = req.body;
-        const user = await Usuarios.findOne({where: {email: email}})
+        const user = await Usuarios.findOne({
+            where: {
+                email: email
+            },
+            include: [{model: Roles}]
+        })
         if (!user || !user.isActive) {
             return res.status(401).json({ message: 'No encontrado' });
         }
@@ -399,7 +407,8 @@ const getIniciarSesion = async (req, res) => {
             return res.status(401).json({ message: 'Credenciales incorrectas' });
         }
 
-        const payload = { email: user.email, id: user.id};
+        const roles_lista = user.Roles.map(rol => rol.nombre)
+        const payload = { email: user.email, id: user.id, roles_lista};
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
         res.status(200).json({ message: 'Login correcto', token });
     } catch (error) {
