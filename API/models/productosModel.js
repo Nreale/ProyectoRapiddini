@@ -22,6 +22,13 @@ const Productos = sequelize.define('Productos', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
+    imagen: {
+        type: DataTypes.STRING
+    },
+    stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     Id_Categoria: {
         type: DataTypes.INTEGER,
         allowNull: false

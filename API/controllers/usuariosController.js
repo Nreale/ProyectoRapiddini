@@ -339,7 +339,7 @@ const patchModificarUsuario = async (req, res) => {
     try {
         const id = req.user.id
         const { nombre, apellido, email, telefono, contraseña, fecha_nacimiento, genero } = req.body;
-
+        
         const usuario = await Usuarios.findOne({
             where: {
                 id,

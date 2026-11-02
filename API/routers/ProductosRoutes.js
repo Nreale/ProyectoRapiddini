@@ -1,10 +1,11 @@
 const { Router } = require('express');
-const {patchModificarProducto, deletedBorrarProducto, postAgregarProducto, getBuscarProducto} = require('../controllers/productosController');
+const {patchModificarProducto, deletedBorrarProducto, postAgregarProducto, getBuscarProducto, getObtenerProductos} = require('../controllers/productosController');
 const router = Router();
 
-router.get('/BuscarProducto/:producto', getBuscarProducto);
+router.get('/ObtenerProductos', getObtenerProductos);
+router.get('/BuscarProducto/:id', getBuscarProducto);
 router.post('/AgregarProducto', postAgregarProducto);
-router.delete('/BorrarProducto/:nombre/:id_local', deletedBorrarProducto);
+router.delete('/BorrarProducto', deletedBorrarProducto);
 router.patch('/ModificarProducto/:id', patchModificarProducto);
 
 

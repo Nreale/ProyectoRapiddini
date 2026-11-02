@@ -1,0 +1,107 @@
+.producto--card {
+    height: 450px;
+    width: 100%;
+    max-width: 320px; /* Mantiene la estructura prolija de la tarjeta original */
+    background-color: #C1121F;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    
+    img {
+        border-radius: 20px;
+        height: 40%;
+        width: 100%;
+        object-fit: cover;    
+        height: 150px;
+    }
+}
+
+.producto--card__datos {
+    background-color: #FDF0D5;
+    margin: 15px;
+    padding: 12px;
+    height: 40%;
+    width: calc(100% - 30px);
+    border-radius: 20px;
+    box-sizing: border-box;
+    
+    h3 {
+        color: #003049;
+        font-size: 1.1rem;
+        height: 40px; /* Altura fija para el título */
+        overflow: hidden;
+        margin: 0;
+    }
+
+    p {
+        margin: 5px 0;
+        color: #669BBC;
+        font-size: 0.9rem;
+        height: 40px; /* Altura fija para la descripción (aprox. 2 líneas) */
+        overflow: hidden;
+    }
+
+    span {
+        color: #C1121F;
+        font-size: 22px;
+        font-weight: bolder;
+        display: block;
+        margin-top: 10px; /* Separación fija para que el precio siempre quede a la misma altura */
+    }
+}
+
+.producto--card__funcionalidades {
+    height: 50px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Distribuye los elementos a los extremos */
+    align-items: center;
+    box-sizing: border-box;
+
+    .producto--card__modifCantidad {
+        height: 70%;
+        display: flex;
+        align-items: center;
+        
+        button {
+            height: 100%;
+            width: 28px;
+            background-color: #669BBC;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        span {
+            margin: 0 8px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    
+    .producto-card__btn {
+        height: 80%;
+        width: 55%; /* Ancho controlado para que nunca se salga del contenedor */
+        background-color: #003049;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 13px; /* Tamaño optimizado para que el texto encaje bien */
+        font-weight: bold;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+}
+
+.producto-card__btn:hover {
+    background-color: #2d4c5f; 
+    box-shadow: 0 10px 24px rgba(255, 71, 87, 0.2);
+}

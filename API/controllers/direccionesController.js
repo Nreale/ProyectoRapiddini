@@ -41,7 +41,7 @@ const crearDireccion = async (req, res) => {
       return res.status(400).json({ mensaje: 'Timbre es obligatorio y debe tener hasta 2 dígitos' });
     }
 
-    const nuevaDireccion = await Direcciones.create({ calle, numero, id_usuario, edificio, timbre });
+    const nuevaDireccion = await Direcciones.create({ calle, numero, Id_Usuario: id_usuario, edificio, timbre });
     res.status(201).json(nuevaDireccion);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al crear la dirección', error: error.message });

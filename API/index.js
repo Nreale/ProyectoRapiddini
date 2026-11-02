@@ -12,6 +12,7 @@ const RepartidorRoutes = require('./routers/RepartidoresRoutes.js');
 const LocalesRoutes = require('./routers/LocalesRoutes.js');
 const CategoriasRoutes = require('./routers/CategoriasRoutes.js');
 const PedidosRoutes = require('./routers/PedidosRoutes.js');
+const CarritoRoutes = require('./routers/CarritoRoutes.js')
 
 const server = express();
 server.use(express.json());
@@ -28,6 +29,7 @@ server.use((req, res, next) => {
     next();
 });
 
+server.use('/Carrito', CarritoRoutes)
 server.use('/Producto', ProductoRoutes);
 server.use('/Usuario', UsuarioRoutes);
 server.use('/Direccion', DireccionRoutes);

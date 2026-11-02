@@ -4,7 +4,7 @@ import axios from "axios";
 import Carrusel from "./Carrusel";
 import CategoriasSection from "./CategoriasSection";
 import "./Home.css";
-
+import ProductosCards from "./ProductosCards";
 
 
 const HomeUsuario = () => {
@@ -73,7 +73,7 @@ const HomeUsuario = () => {
     return (
         <>
             <div className="home__section">
-                <h1>USUARIO</h1>
+                
                 <Carrusel 
                     titulo="Destacados de la Semana" 
                     locales={localesArriba} 
@@ -88,6 +88,9 @@ const HomeUsuario = () => {
                     titulo="Otras Sucursales" 
                     locales={localesAbajo} 
                 />
+
+                <br /><br />
+                <ProductosCards />
             </div>
         </>
         
