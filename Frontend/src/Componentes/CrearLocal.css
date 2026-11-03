@@ -1,0 +1,161 @@
+:root {
+    --color-vino-oscuro: #780000;
+    --color-rojo-principal: #C1121F;
+    --color-crema-fondo: #FDF0D5;
+    --color-azul-profundo: #003049;
+    --color-celeste-acento: #669BBC;
+}
+
+.crear-local {
+    width: 100vw;   
+    height: 100vh;
+    overflow: hidden;
+    /* Fondo con gradiente usando el azul profundo y el borgoña/rojo de la paleta */
+    background: linear-gradient(135deg, var(--color-azul-profundo) 0%, var(--color-vino-oscuro) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crear-local__card {
+    width: 100%;
+    max-width: 500px;  
+    max-height: 90vh;  
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    overflow-y: auto;  
+    overflow-x: hidden;
+}
+
+.crear-local__card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.crear-local__card::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.crear-local__header {
+    width: 100%;
+    padding: 18px 0;   
+    background-color: var(--color-rojo-principal);
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    color: white;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.crear-local__header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.crear-local__header p {
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.crear-local__fields {
+    padding: 20px 0;
+    width: 82%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.crear-local__fields input[type="text"],
+.crear-local__fields input[type="tel"],
+.crear-local__fields textarea {
+    width: 100%;        
+    padding: 10px 14px; 
+    border-radius: 20px;
+    background-color: #f1f3f5;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.crear-local__fields input:focus,
+.crear-local__fields textarea:focus {
+    border: 1px solid var(--color-celeste-acento);
+}
+
+/* Estilo para los bloques de carga de archivos (Logo y Foto) */
+.crear-local__file-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: #f1f3f5;
+    padding: 10px 14px;
+    border-radius: 20px;
+}
+
+.crear-local__file-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-azul-profundo);
+}
+
+.crear-local__file-group input[type="file"] {
+    font-size: 12px;
+    color: #334155;
+}
+
+.crear-local__error {
+    color: var(--color-vino-oscuro);
+    font-size: 12px;
+    text-align: center;
+    margin: 4px 0;
+    font-weight: 600;
+}
+
+.crear-local__footer {
+    width: 100%;
+    padding: 10px 0 20px 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.crear-local__btn-submit {
+    background-color: var(--color-rojo-principal); 
+    border: none;
+    color: white;
+    padding: 10px 32px;         
+    font-size: 13px;           
+    font-weight: 600;
+    border-radius: 50px;      
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.crear-local__btn-submit:hover {
+    background-color: var(--color-vino-oscuro);
+    transform: translateY(-1px); 
+}
+
+.crear-local__link-back {
+    font-size: 12px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.crear-local__link-back:hover {
+    color: var(--color-rojo-principal);
+    text-decoration: underline;
+}

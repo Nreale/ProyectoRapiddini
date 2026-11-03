@@ -24,6 +24,10 @@ const Locales = sequelize.define('Locales', {
     imagen: {
         type: DataTypes.STRING
     },
+    logo: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     // Columna para el DVH
     dvh: {
         type: DataTypes.STRING(255),

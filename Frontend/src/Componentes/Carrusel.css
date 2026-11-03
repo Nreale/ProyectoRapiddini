@@ -1,3 +1,11 @@
+:root {
+    --color-vino-oscuro: #780000;
+    --color-rojo-principal: #C1121F;
+    --color-crema-fondo: #FDF0D5;
+    --color-azul-profundo: #003049;
+    --color-celeste-acento: #669BBC;
+}
+
 .carrusel-container {
     width: 100%;
     max-width: 1200px;
@@ -9,7 +17,8 @@
     text-align: center;
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--color-azul-profundo);
+    font-weight: 800;
 }
 
 .carrusel-grid {
@@ -25,36 +34,39 @@
 }
 
 .carrusel-grid::-webkit-scrollbar-thumb {
-    background-color: #ccc;
+    background-color: var(--color-celeste-acento);
     border-radius: 4px;
 }
 
 .local-card {
-    min-width: 250px;
+    min-width: 280px;
+    height: 220px;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px rgba(0, 48, 73, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #ffffff;
+    overflow: hidden;
 }
 
 .local-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 48, 73, 0.2);
 }
 
 .local-nombre {
     font-size: 1.3rem;
-    margin-bottom: 10px;
-    color: #1a1a1a;
+    margin-bottom: 8px;
+    color: var(--color-azul-profundo);
 }
 
 .local-telefono {
     font-size: 0.95rem;
-    color: #666;
+    color: #555555;
     margin-bottom: 15px;
 }
 
@@ -64,6 +76,7 @@
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: bold;
+    width: fit-content;
 }
 
 .local-estado.activo {
@@ -73,7 +86,7 @@
 
 .local-estado.inactivo {
     background-color: #fce8e6;
-    color: #c5221f;
+    color: var(--color-rojo-principal);
 }
 
 .carrusel-loading,
@@ -88,19 +101,15 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border: none;
 }
 
 .local-card.con-imagen .local-nombre {
     color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .local-card.con-imagen .local-telefono {
     color: #f0f0f0;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.local-card.con-imagen .local-telefono {
-    color: #f1f1f1;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }

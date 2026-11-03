@@ -1,0 +1,144 @@
+:root {
+    --color-vino-oscuro: #780000;
+    --color-rojo-principal: #C1121F;
+    --color-crema-fondo: #FDF0D5;
+    --color-azul-profundo: #003049;
+    --color-celeste-acento: #669BBC;
+    --color-naranja-acento: #F7B538;
+}
+
+.detalle-local-container {
+    display: flex;
+    min-height: 85vh;
+    width: 100%;
+    background-color: var(--color-crema-fondo);
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.detalle-local__info-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-right: 3px solid var(--color-vino-oscuro);
+    background-color: #ffffff;
+}
+
+.detalle-local__header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    font-weight: 800;
+    color: var(--color-azul-profundo);
+}
+
+.detalle-local__header .subrayado {
+    width: 150px;
+    height: 4px;
+    background-color: var(--color-rojo-principal);
+    margin-bottom: 20px;
+    border-radius: 2px;
+}
+
+.detalle-local__header .descripcion {
+    font-size: 1.1rem;
+    color: #333333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.detalle-local__header .telefono {
+    font-size: 1rem;
+    color: var(--color-celeste-acento);
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* Caja del Catálogo */
+.detalle-local__catalogo {
+    border: 2px solid var(--color-azul-profundo);
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff9ed;
+    flex-grow: 1;
+    box-shadow: 0 4px 6px rgba(0, 48, 73, 0.05);
+}
+
+.detalle-local__catalogo h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--color-azul-profundo);
+    border-bottom: 2px solid var(--color-celeste-acento);
+    padding-bottom: 8px;
+}
+
+.catalogo-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.producto-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 12px 18px;
+    border: 1px solid #e0d5c1;
+    border-left: 4px solid var(--color-rojo-principal);
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.producto-item:hover {
+    transform: translateX(4px);
+}
+
+.producto-item h4 {
+    color: var(--color-azul-profundo);
+    margin: 0;
+}
+
+.producto-item .precio {
+    font-weight: bold;
+    color: var(--color-vino-oscuro);
+    font-size: 1.1rem;
+}
+
+.sin-productos {
+    color: #777777;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+.detalle-local__image-section {
+    flex: 1;
+    background-color: var(--color-celeste-acento);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.detalle-local__image-section img {
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 4px solid var(--color-azul-profundo);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.error-msg, .loading-msg {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: var(--color-vino-oscuro);
+    background-color: var(--color-crema-fondo);
+    min-height: 85vh;
+}
