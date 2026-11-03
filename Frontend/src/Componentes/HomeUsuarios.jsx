@@ -20,14 +20,14 @@ const HomeUsuario = () => {
         setError(null);
         try {
             const response = await axios.get('http://localhost:3000/Locales/ObtenerLocales')
+            const localesObtenidos = response.data.locales
             
+            setLocales(localesObtenidos);
             
-            setLocales(response.data.locales.slice(0, 10));
-            
-            const mitad = Math.floor(locales.length / 2);
+            const mitad = Math.ceil(localesObtenidos.length / 2);
 
-            setlocalesArriba(locales.slice(0, mitad));
-            setlocalesAbajo(locales.slice(mitad, locales.length));
+            setlocalesArriba(localesObtenidos.slice(0, mitad));
+            setlocalesAbajo(localesObtenidos.slice(mitad));
 
 
         } catch (error) {

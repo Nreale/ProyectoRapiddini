@@ -11,11 +11,10 @@ router.post('/AgregarLocal', autorizacion, upload.fields([
     { name: 'imagen', maxCount: 1 },
     { name: 'logo', maxCount: 1 }
 ]),postAgregarLocal);
-router.patch('/ModificarLocal/:id_local', upload.fields([
+router.patch('/ModificarLocal/:id_local', autorizacion, upload.fields([
     { name: 'imagen', maxCount: 1 },
     { name: 'logo', maxCount: 1 }
 ]),patchModificarLocal);
-router.delete('/BorrarLocal/:id_local', deleteBorrarLocal);
-
+router.delete('/BorrarLocal/:id_local', autorizacion, deleteBorrarLocal);
 
 module.exports = router;

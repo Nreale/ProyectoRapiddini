@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 function Carrito() {
     const [carrito, setCarrito] = useState(null)
 
+    const navigate = useNavigate()
+
     useEffect(()=>{
         const obtenerCarrito = async () => {
             try {
@@ -21,6 +23,39 @@ function Carrito() {
         };
         obtenerCarrito();
     }, [])
+
+    const VaciarCarrito = async () => {
+        try {
+            const idPedidoActivo = carrito.id;
+            console.log(carrito)
+
+            await axios.delete(`http://localhost:3000/Carrito/Vaciar/${idPedidoActivo}`);
+
+            await axios.put(`http://localhost:3000/Pedidos/${idPedidoActivo}/estado`, {
+                total: 0
+            });
+
+            setCarrito(null);
+            alert("El carrito ha sido vaciado.");
+        } catch (error) {
+            console.error("Error al vaciar el carrito:", error);
+            alert("Hubo un error al vaciar el carrito.");
+        }
+    };
+
+    const CompletarPedido = async () => {
+        const idPedidoActivo = carrito.id;
+
+        await axios.put(`http://localhost:3000/Pedidos/${idPedidoActivo}/estado`, {
+            estado: "EsperandoRepartidor"
+        });
+        await axios.post('http://localhost:3000/Pedidos/', {
+            id_usuario: carrito.Id_Usuario
+        })
+
+        alert('Su pedido esta a la espera de un repartidor, puede realizar otro a continuacion')
+        navigate('/')
+    }
 
     if (!carrito || !carrito.Carritos || carrito.Carritos.length === 0) {
         return (
@@ -53,7 +88,17 @@ function Carrito() {
                 ))}
             </div>
             <h3>Total: ${carrito.total}</h3>
-            <button className="btn-finalizar">Finalizar Compra</button>
+            <div className="carrito-acciones">
+                <Link to='/'>
+                    <button className="btn-finalizar">Volver al menú</button>
+                </Link>
+
+                <button className="btn-finalizar" onClick={VaciarCarrito}>
+                    Vaciar Carrito
+                </button>
+
+                <button className="btn-finalizar" onClick={CompletarPedido}>Finalizar Compra</button>
+            </div>
         </div>
     );
 };

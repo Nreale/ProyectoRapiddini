@@ -42,7 +42,6 @@ const getCarritoActivo = async (req, res) => {
     try {
         const id_usuario = req.user.id;
 
-        // 1. Busca el pedido pendiente del usuario
         const pedidoActivo = await Pedidos.findOne({
             where: {
                 Id_Usuario: id_usuario,
@@ -50,8 +49,8 @@ const getCarritoActivo = async (req, res) => {
             },
             include: [
                 { 
-                    model: Carritos, // La tabla intermedia
-                    include: [Productos] // ¡Y de yapa trae los datos de los productos!
+                    model: Carritos, 
+                    include: [Productos] 
                 }
             ]
         });
@@ -67,7 +66,7 @@ const getCarritoActivo = async (req, res) => {
     }
 };
 
-// 3. Crear un nuevo pedido manual
+
 const crearPedido = async (req, res) => {
     try {
         const { id_usuario, metodo_pago, id_direccion } = req.body;

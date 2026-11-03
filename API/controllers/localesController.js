@@ -1,4 +1,4 @@
-const { Locales, Vendedores, Sucursales, Pedidos, Carritos, Productos } = require('../models/index.js');
+const { Locales, Vendedores, Sucursales, Pedidos, Carritos, Productos, Usuarios } = require('../models/index.js');
 
 const getLocales = async (req, res) => {
     try {
@@ -92,6 +92,7 @@ const BuscarLocalesPorVendedor = async (req, res) => {
         return res.status(200).json({locales: localesConEstadisticas})
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: 'Error al obtener los locales y sus estadísticas',
             errorDetails: error.message
@@ -131,11 +132,24 @@ const postAgregarLocal = async (req, res) => {
 
         const imagenPath = req.files?.imagen ? `/uploads/${req.files.imagen[0].filename}` : null;
         const logoPath = req.files?.logo ? `/uploads/${req.files.logo[0].filename}` : null;
+        const Id_Usuario = req.user.id
 
-        if (!nombre || telefono === undefined || estado === undefined || !Id_Vendedor) {
+
+        if (!nombre || telefono === undefined || estado === undefined ) {
             return res.status(400).json({
                 message: "Faltan parámetros obligatorios"
             });
+        }
+
+        const vendedor = await Vendedores.findOne({
+            where: {
+                Id_Usuario,
+                isActive: true
+            }
+        })
+
+        if (!vendedor) {
+            return res.status(404).json({message: "Vendedor no encontrado"})
         }
 
         const local = await Locales.create({
@@ -144,7 +158,7 @@ const postAgregarLocal = async (req, res) => {
             estado,
             imagen: imagenPath,
             logo: logoPath,
-            Id_Vendedor
+            Id_Vendedor: vendedor.id
         });
 
         return res.status(201).json({
@@ -153,6 +167,7 @@ const postAgregarLocal = async (req, res) => {
         });
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ 
             message: 'Error interno del servidor al crear el local',
             errorDetails: error.message
