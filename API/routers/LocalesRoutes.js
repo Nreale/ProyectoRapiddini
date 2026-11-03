@@ -6,9 +6,9 @@ const router = Router();
 router.get('/ObtenerLocales', getLocales);
 router.get('/ObtenerLocalesByVendedor',autorizacion, BuscarLocalesPorVendedor);
 router.get('/BuscarLocal/:nombre', getLocal);
-router.post('/AgregarLocal', postAgregarLocal);
-router.patch('/ModificarLocal/:id_local', patchModificarLocal);
-router.delete('/BorrarLocal/:id_local', deleteBorrarLocal);
+router.post('/AgregarLocal',autorizacion, postAgregarLocal);
+router.patch('/ModificarLocal/:id_local',autorizacion, patchModificarLocal);
+router.delete('/BorrarLocal/:id_local',autorizacion, deleteBorrarLocal);
 
 
 module.exports = router;

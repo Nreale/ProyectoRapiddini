@@ -108,10 +108,25 @@ const deleteBorrarCarrito = async (req, res) => {
     }
 };
 
+const deleteVaciarCarrito = async (req, res) => {
+    try {
+        const { idPedido } = req.params;
+
+        const eliminados = await Carritos.destroy({
+            where: { Id_Pedido: idPedido }
+        });
+
+        return res.status(200).json({ message: "Carrito vaciado correctamente", eliminados });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getMostrarCarritos,
     getBuscarCarrito,
     postCrearCarrito,
     patchModificarCarrito,
-    deleteBorrarCarrito
+    deleteBorrarCarrito,
+    deleteVaciarCarrito
 };

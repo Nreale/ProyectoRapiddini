@@ -3,6 +3,9 @@ const { Categorias } = require('../models/categoriasModel.js');
 const obtenerCategorias = async (req, res) => {
     try {
         const categorias = await Categorias.findAll();
+        if (categorias.length === 0) {
+            return res.status(404).json({message: "No hay categorias Cargadas"})
+        }
         return res.status(200).json({
             categorias
         });
