@@ -1,7 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Carrusel.css';
 
 const Carrusel = ({ titulo, locales = [] }) => {
+    const navigate = useNavigate();
+    const handleCardClick = (nombreLocal) => {
+        navigate(`/local/${encodeURIComponent(nombreLocal)}`);
+    };
+
     return (
         <div className="carrusel-container">
             <h2 className="carrusel-titulo">{titulo}</h2>
@@ -12,7 +18,7 @@ const Carrusel = ({ titulo, locales = [] }) => {
                             key={local.id} 
                             className={`local-card ${local.imagen ? 'con-imagen' : ''}`} 
                             style={local.imagen ? { 
-                                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${local.imagen})` 
+                                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(http://localhost:3000${local.imagen})`
                             } : {}}
                         >
                             <div className="local-info">

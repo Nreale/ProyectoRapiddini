@@ -10,6 +10,8 @@ import RegisterRepartidor from './Componentes/RegisterRepartidores'
 import Configuracion from './Componentes/Configuracion';
 import CambiarContraseña from './Componentes/CambiarContraseña'
 import Carrito from './Componentes/Carrito'
+import DetalleLocal from './Componentes/Locales'
+import CrearLocal from './Componentes/CrearLocal'
 
 function App() {
   
@@ -30,6 +32,8 @@ function App() {
           <Route element={<RegisterRepartidor/>} path='/RegisterRepartidor'></Route>
           <Route element={<Configuracion />} path="/Configuracion"></Route>
           <Route element={<Carrito />} path="/Carrito"></Route>
+          <Route element={<DetalleLocal />} path="/local/:nombre"></Route>
+          <Route element={<CrearLocal />} path="/crear-local"></Route>
         </Routes>
       </main>
 

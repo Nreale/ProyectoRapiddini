@@ -48,9 +48,11 @@ const obtenerCategoriaPorNombre = async (req, res) => {
 
 const crearCategoria = async (req, res) => {
     try {
-        const { nombre, descripcion, imagen } = req.body;
+        const { nombre, descripcion} = req.body;
 
-        if (!nombre || !descripcion) {
+        const imagenPath = req.file ? `/uploads/${req.file.filename}`: null;
+
+        if (!nombre || !descripcion|| !imagenPath) {
             return res.status(400).json({
                 message: 'El nombre y la descripción son obligatorios',
             });
@@ -59,7 +61,7 @@ const crearCategoria = async (req, res) => {
         const nuevaCategoria = await Categorias.create({
             nombre,
             descripcion,
-            imagen
+            imagen: imagenPath
         });
 
         return res.status(201).json({
@@ -78,7 +80,10 @@ const crearCategoria = async (req, res) => {
 const actualizarCategoriaPorNombre = async (req, res) => {
     try {
         const { nombre } = req.params;
-        const { nuevoNombre, descripcion, imagen } = req.body;
+        const { nuevoNombre, descripcion} = req.body;
+        
+
+        const imagenPath = req.file ? `/uploads/${req.file.filename}` : undefined;
 
         if (!nombre) {
             return res.status(400).json({
@@ -100,7 +105,7 @@ const actualizarCategoriaPorNombre = async (req, res) => {
 
         categoria.nombre = nuevoNombre !== undefined ? nuevoNombre : categoria.nombre;
         categoria.descripcion = descripcion !== undefined ? descripcion : categoria.descripcion;
-        categoria.imagen = imagen !== undefined ? imagen : categoria.imagen;
+        categoria.imagen = imagenPath !== undefined ? imagenPath : categoria.imagen;
 
         await categoria.save();
 

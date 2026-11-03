@@ -128,8 +128,12 @@ const getLocal = async (req, res) => {
 
 const postAgregarLocal = async (req, res) => {
     try {
-        const { nombre, telefono, estado, imagen } = req.body;
+        const { nombre, telefono, estado, Id_Vendedor } = req.body;
+
+        const imagenPath = req.files?.imagen ? `/uploads/${req.files.imagen[0].filename}` : null;
+        const logoPath = req.files?.logo ? `/uploads/${req.files.logo[0].filename}` : null;
         const Id_Usuario = req.user.id
+
 
         if (!nombre || telefono === undefined || estado === undefined ) {
             return res.status(400).json({
@@ -152,7 +156,8 @@ const postAgregarLocal = async (req, res) => {
             nombre,
             telefono,
             estado,
-            imagen,
+            imagen: imagenPath,
+            logo: logoPath,
             Id_Vendedor: vendedor.id
         });
 
@@ -181,13 +186,17 @@ const patchModificarLocal = async (req, res) => {
             });
         }
 
-        const { nombre, telefono, estado, imagen } = req.body;
+        const { nombre, telefono, estado} = req.body;
+
+        const imagenPath = req.files?.imagen ? `/uploads/${req.files.imagen[0].filename}` : undefined;
+        const logoPath = req.files?.logo ? `/uploads/${req.files.logo[0].filename}` : undefined;
 
         await local.update({
-            nombre,
-            telefono,
-            estado,
-            imagen
+            nombre: nombre !== undefined ? nombre : local.nombre,
+            telefono: telefono !== undefined ? telefono : local.telefono,
+            estado: estado !== undefined ? estado : local.estado,
+            imagen: imagenPath !== undefined ? imagenPath : local.imagen,
+            logo: logoPath !== undefined ? logoPath : local.logo
         });
 
         return res.status(200).json({
